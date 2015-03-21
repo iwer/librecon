@@ -20,7 +20,7 @@ DepthFilePointCloudGenerator::DepthFilePointCloudGenerator() {
 	throw "Not yet implemented";
 }
 
-void DepthFilePointCloudGenerator::loadDepthImageFromFile(string fileName) {
+void DepthFilePointCloudGenerator::loadDepthImageFromFile(std::string fileName) {
 	// TODO - implement DepthFilePointCloudGenerator::loadDepthImageFromFile
 	throw "Not yet implemented";
 }
