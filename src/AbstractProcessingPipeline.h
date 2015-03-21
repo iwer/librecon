@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ofMain.h"
 #include "AbstractMeshProcessor.h"
 #include "AbstractPointProcessor.h"
 #include "typedefs.h"
