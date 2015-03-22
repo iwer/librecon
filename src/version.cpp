@@ -1,5 +1,5 @@
 #include <recon/version.h>
-#include "libraryinfo.h"
+#include "recon/libraryinfo.h"
 
 EXTERNC int recon_version_major()
 { 
