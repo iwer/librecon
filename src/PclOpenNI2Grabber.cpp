@@ -1,4 +1,4 @@
-#include "PclOpenNI2Grabber.h"
+#include "recon/PclOpenNI2Grabber.h"
 
 
 PclOpenNI2Grabber::PclOpenNI2Grabber(void)

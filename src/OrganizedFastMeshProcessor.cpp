@@ -1,4 +1,4 @@
-#include "OrganizedFastMeshProcessor.h"
+#include "recon/OrganizedFastMeshProcessor.h"
 
 
 OrganizedFastMeshProcessor::OrganizedFastMeshProcessor(void) :

@@ -1,4 +1,4 @@
-#include "GreedyProjectionMeshProcessor.h"
+#include "recon/GreedyProjectionMeshProcessor.h"
 
 
 GreedyProjectionMeshProcessor::GreedyProjectionMeshProcessor(void)

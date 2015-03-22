@@ -1,4 +1,4 @@
-#include "AbstractMeshProcessor.h"
+#include "recon/AbstractMeshProcessor.h"
 
 
 AbstractMeshProcessor::AbstractMeshProcessor(void) :

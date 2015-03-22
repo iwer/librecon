@@ -1,4 +1,4 @@
-#include "AbstractPointProcessor.h"
+#include "recon/AbstractPointProcessor.h"
 
 
 AbstractPointProcessor::AbstractPointProcessor(void) :
