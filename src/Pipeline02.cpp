@@ -1,4 +1,4 @@
-#include "Pipeline02.h"
+#include "recon/Pipeline02.h"
 
 
 Pipeline02::Pipeline02(boost::signals2::signal<void (float)> * minDepUpdate, 

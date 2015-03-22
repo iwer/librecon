@@ -1,4 +1,4 @@
-#include "DepthFilePointCloudGenerator.h"
+#include "recon/DepthFilePointCloudGenerator.h"
 
 void DepthFilePointCloudGenerator::aquireFrame() {
 	// TODO - implement DepthFilePointCloudGenerator::aquireFrame

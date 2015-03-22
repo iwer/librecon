@@ -1,4 +1,4 @@
-#include "PointCloudSmoother.h"
+#include "recon/PointCloudSmoother.h"
 
 void PointCloudSmoother::processData() {
 	// TODO - implement PointCloudSmoother::processData

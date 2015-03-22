@@ -1,4 +1,4 @@
-#include "AbstractPointCloudGenerator.h"
+#include "recon/AbstractPointCloudGenerator.h"
 
 
 AbstractPointCloudGenerator::AbstractPointCloudGenerator(void) :

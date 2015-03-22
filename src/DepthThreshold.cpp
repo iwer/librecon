@@ -1,4 +1,4 @@
-#include "DepthThreshold.h"
+#include "recon/DepthThreshold.h"
 
 DepthThreshold::DepthThreshold(void):
 	AbstractPointProcessor()

@@ -1,4 +1,4 @@
-#include "PointCloudSampler.h"
+#include "recon/PointCloudSampler.h"
 
 PointCloudSampler::PointCloudSampler() 
 	: AbstractPointProcessor()

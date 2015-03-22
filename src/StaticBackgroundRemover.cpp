@@ -1,4 +1,4 @@
-#include "StaticBackgroundRemover.h"
+#include "recon/StaticBackgroundRemover.h"
 
 void StaticBackgroundRemover::processData() {
 	// TODO - implement StaticBackgroundRemover::processData

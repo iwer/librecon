@@ -1,4 +1,4 @@
-#include "AbstractProcessingPipeline.h"
+#include "recon/AbstractProcessingPipeline.h"
 
 
 AbstractProcessingPipeline::AbstractProcessingPipeline(void) 
