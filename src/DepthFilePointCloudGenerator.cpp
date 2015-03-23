@@ -15,14 +15,54 @@ typedef union
 	uint32_t long_value;
 } RGBValue;
 
+inline float raw_depth_to_meters(int depth_value){
+	float depth_value_f = (float) depth_value; 
+	if (depth_value < 2047){ 
+		float depth = 1.0 / (depth_value_f  * -0.0030711016 + 3.3309495161);
+		return depth; 
+	}
+
+	return 0.0f; 
+} 
+
+inline void	depth2xyz (float v_viewing_angle, float h_viewing_angle,
+					   int image_width, int image_height, int image_x, int image_y,
+					   float depth, float &x, float &y, float &z)
+{
+	float width, height;
+	static const float PI = 3.1415927;
+	if (depth <= 0.0f)
+	{
+		x = y = z = std::numeric_limits<float>::quiet_NaN ();
+	}
+	else
+	{
+		width = depth * std::tan (h_viewing_angle * PI / 180 / 2) * 2;
+		height = depth * std::tan (v_viewing_angle * PI / 180 / 2) * 2;
+		x = (image_x - image_width / 2.0) / image_width * width;
+		y = (image_height / 2.0 - image_y) / image_height * height;
+		z = depth;
+	}
+}
+
+
 DepthFilePointCloudGenerator::DepthFilePointCloudGenerator() 
 	: rgb_parameters_(std::numeric_limits<double>::quiet_NaN () )
 	, depth_parameters_(std::numeric_limits<double>::quiet_NaN () )
 {
 }
 
+DepthFilePointCloudGenerator::DepthFilePointCloudGenerator(float focalLength)
+	: rgb_parameters_(std::numeric_limits<double>::quiet_NaN () )
+	, depth_parameters_(std::numeric_limits<double>::quiet_NaN () )
+{
+	rgb_focal_length_ = focalLength;
+	depth_focal_length_ = focalLength;
+}
+
 DepthFilePointCloudGenerator::~DepthFilePointCloudGenerator()
 {
+
 }
 
 
@@ -49,34 +89,39 @@ void DepthFilePointCloudGenerator::loadDepthImageFromFile(std::string rgbFileNam
 	color_reader->SetFileName (rgbFileName.c_str());
 	color_reader->Update ();
 	color_image_data = color_reader->GetOutput ();
-	int components = color_image_data->GetNumberOfScalarComponents ();
+	auto components = color_image_data->GetNumberOfScalarComponents ();
 	int dimensions[3];
 	color_image_data->GetDimensions (dimensions);
+	image_width_ = dimensions[0];
+	image_height_ = dimensions[1];
+
 
 	// Load the depth input file
 	vtkSmartPointer<vtkImageData> depth_image_data;
 	vtkSmartPointer<vtkPNGReader> depth_reader;
-	bool enable_depth = false;
-	float v_viewing_angle = 43.0f;
-	float h_viewing_angle = 57.0f;
-	float depth_unit_magic = 1000.0f;
+	auto enable_depth = false;
+	auto v_viewing_angle = 43.0f;
+	auto h_viewing_angle = 57.0f;
+	auto depth_unit_magic = 1000.0f;
 	depth_reader = vtkSmartPointer<vtkPNGReader>::New ();
 	depth_reader->SetFileName (depthFileName.c_str());
 	depth_reader->Update ();
 	depth_image_data = depth_reader->GetOutput ();
-	int depth_components = depth_image_data->GetNumberOfScalarComponents ();
+	auto depth_components = depth_image_data->GetNumberOfScalarComponents ();
 	int depth_dimensions[3];
 	depth_image_data->GetDimensions(depth_dimensions);
-	
-	std::cout << "Components: " << components << " Dimensions: " << dimensions[0] << ", " << dimensions[1] << ", " << dimensions[2] << std::endl;
-	std::cout << "DepthComponents: " << depth_components << " DepthDimensions: " << depth_dimensions[0] << ", " << depth_dimensions[1] << ", " << depth_dimensions[2] << std::endl;
+	depth_width_ = depth_dimensions[0];
+	depth_height_ = depth_dimensions[1];
 
+	std::cout << "Components: " << components << " Dimensions: " 
+		<< dimensions[0] << ", " << dimensions[1] << ", " << dimensions[2] 
+		<< " Scalarsize: " << color_image_data->GetScalarSize() << std::endl;
+	std::cout << "DepthComponents: " << depth_components << " DepthDimensions: " 
+		<< depth_dimensions[0] << ", " << depth_dimensions[1] << ", " << depth_dimensions[2] 
+		<< " Scalarsize: " << depth_image_data->GetScalarSize() << std::endl;
 
-}
+	// #  create pointcloud  ################################ 
 
-// from pcl/io/openni2_grabber
-CloudPtr DepthFilePointCloudGenerator::convertToXYZRGBPointCloud (const pcl::io::Image::Ptr &image, const pcl::io::DepthImage::Ptr &depth_image)
-{
 	boost::shared_ptr<pcl::PointCloud<PointType> > cloud (new pcl::PointCloud<PointType>);
 
 	cloud->header.frame_id = rgb_frame_id_;
@@ -109,24 +154,7 @@ CloudPtr DepthFilePointCloudGenerator::convertToXYZRGBPointCloud (const pcl::io:
 	auto fx_inv = 1.0f / fx;
 	auto fy_inv = 1.0f / fy;
 
-	auto depth_map = static_cast<const uint16_t*>(depth_image->getData ());
-	if (depth_image->getWidth () != depth_width_ || depth_image->getHeight () != depth_height_)
-	{
-		// Resize the image if nessacery
-		depth_resize_buffer_.resize(depth_width_ * depth_height_);
-		depth_map = depth_resize_buffer_.data();
-		depth_image->fillDepthImageRaw (depth_width_, depth_height_, const_cast<unsigned short*>(depth_map) );
-	}
-
-	auto rgb_buffer = static_cast<const uint8_t*>(image->getData ());
-	if (image->getWidth () != image_width_ || image->getHeight () != image_height_)
-	{
-		// Resize the image if nessacery
-		color_resize_buffer_.resize(image_width_ * image_height_ * 3);
-		rgb_buffer = color_resize_buffer_.data();
-		image->fillRGB (image_width_, image_height_, const_cast<unsigned char*>(rgb_buffer), image_width_ * 3);
-	}
-
+	// no resizing
 
 	float bad_point = std::numeric_limits<float>::quiet_NaN ();
 
@@ -146,6 +174,7 @@ CloudPtr DepthFilePointCloudGenerator::convertToXYZRGBPointCloud (const pcl::io:
 
 	auto value_idx = 0;
 	auto point_idx = 0;
+
 	for (auto v = 0; v < depth_height_; ++v, point_idx += skip)
 	{
 		for (auto u = 0; u < depth_width_; ++u, ++value_idx, point_idx += step)
@@ -154,14 +183,19 @@ CloudPtr DepthFilePointCloudGenerator::convertToXYZRGBPointCloud (const pcl::io:
 			/// @todo Different values for these cases
 			// Check for invalid measurements
 
-			auto pixel = depth_map[value_idx];
-			if (pixel != 0 &&
-				pixel != depth_image->getNoSampleValue () &&
-				pixel != depth_image->getShadowValue () )
+			//auto pixel = depth_map[value_idx];
+			auto pixel = 255 - depth_image_data->GetScalarComponentAsFloat (u, v, 0, 0);// / depth_unit_magic;
+			//std::cout << "Depthvalue: " << pixel << std::endl;
+			if (pixel != 0 /*&&
+						   pixel != depth_image->getNoSampleValue () &&
+						   pixel != depth_image->getShadowValue () */)
 			{
-				pt.z = depth_map[value_idx] * 0.001f;  // millimeters to meters
-				pt.x = (static_cast<float> (u) - cx) * pt.z * fx_inv;
-				pt.y = (static_cast<float> (v) - cy) * pt.z * fy_inv;
+				depth2xyz((0.5 * depth_height_ / depth_focal_length_), (0.5 * depth_width_ / depth_focal_length_),
+					depth_width_, depth_height_, u, v,
+					pixel, pt.x, pt.y, pt.z);
+				//pt.z = pixel;  // millimeters to meters
+				//pt.x = (static_cast<float> (u) - cx) * pt.z * fx_inv;
+				//pt.y = (static_cast<float> (v) - cy) * pt.z * fy_inv;
 			}
 			else
 			{
@@ -185,14 +219,23 @@ CloudPtr DepthFilePointCloudGenerator::convertToXYZRGBPointCloud (const pcl::io:
 		{
 			PointType& pt = cloud->points[point_idx];
 
-			color.Red   = rgb_buffer[value_idx];
-			color.Green = rgb_buffer[value_idx + 1];
-			color.Blue  = rgb_buffer[value_idx + 2];
+			//color.Red   = rgb_buffer[value_idx];
+			//color.Green = rgb_buffer[value_idx + 1];
+			//color.Blue  = rgb_buffer[value_idx + 2];
+			color.Red	= color_image_data->GetScalarComponentAsDouble (xIdx, yIdx, 0, 0);
+			color.Green	= color_image_data->GetScalarComponentAsDouble (xIdx, yIdx, 0, 1);
+			color.Blue	= color_image_data->GetScalarComponentAsDouble (xIdx, yIdx, 0, 2);
+			color.Alpha = color_image_data->GetScalarComponentAsDouble (xIdx, yIdx, 0, 3);
 
 			pt.rgba = color.long_value;
 		}
 	}
 	cloud->sensor_origin_.setZero ();
-	cloud->sensor_orientation_.setIdentity ();
-	return (cloud);
+	cloud->sensor_orientation_.setIdentity();
+	//return (cloud);
+	{
+		boost::mutex::scoped_lock(cloud_mutex_);
+		cloud_ = cloud;
+	}
 }
+
