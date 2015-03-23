@@ -19,7 +19,7 @@ class DepthFilePointCloudGenerator : AbstractPointCloudGenerator {
 		/** cy */
 		double principal_point_y;
 
-		explicit CameraParameters (double initValue)
+		CameraParameters (double initValue)
 			: focal_length_x (initValue), focal_length_y (initValue),
 			principal_point_x (initValue),  principal_point_y (initValue)
 		{}
@@ -31,6 +31,7 @@ class DepthFilePointCloudGenerator : AbstractPointCloudGenerator {
 
 public:
 	DepthFilePointCloudGenerator();
+	DepthFilePointCloudGenerator(float focalLength);
 	~DepthFilePointCloudGenerator();
 
 	void aquireFrame() override;
@@ -42,8 +43,6 @@ public:
 
 	void loadDepthImageFromFile(std::string rgbFileName, std::string depthFileName);
 private:
-	CloudPtr convertToXYZRGBPointCloud (const pcl::io::Image::Ptr &image, const pcl::io::DepthImage::Ptr &depth_image);
-
 	std::string rgb_frame_id_;
 	std::string depth_frame_id_;
 	unsigned image_width_;
