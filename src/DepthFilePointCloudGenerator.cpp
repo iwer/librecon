@@ -30,13 +30,16 @@ inline void	depth2xyz (float v_viewing_angle, float h_viewing_angle,
 					   float depth, float &x, float &y, float &z)
 {
 	float width, height;
-	static const float PI = 3.1415927;
+	//static const float PI = 3.1415927;
+	static const float PI =   3.1415926535898;
+	
 	if (depth <= 0.0f)
 	{
 		x = y = z = std::numeric_limits<float>::quiet_NaN ();
 	}
 	else
 	{
+		depth = depth / 8;
 		width = depth * std::tan (h_viewing_angle * PI / 180 / 2) * 2;
 		height = depth * std::tan (v_viewing_angle * PI / 180 / 2) * 2;
 		x = (image_x - image_width / 2.0) / image_width * width;
@@ -100,8 +103,8 @@ void DepthFilePointCloudGenerator::loadDepthImageFromFile(std::string rgbFileNam
 	vtkSmartPointer<vtkImageData> depth_image_data;
 	vtkSmartPointer<vtkPNGReader> depth_reader;
 	auto enable_depth = false;
-	auto v_viewing_angle = 43.0f;
-	auto h_viewing_angle = 57.0f;
+	auto v_viewing_angle = 33.3984f;
+	auto h_viewing_angle = 56.1449f;
 	auto depth_unit_magic = 1000.0f;
 	depth_reader = vtkSmartPointer<vtkPNGReader>::New ();
 	depth_reader->SetFileName (depthFileName.c_str());
@@ -133,7 +136,7 @@ void DepthFilePointCloudGenerator::loadDepthImageFromFile(std::string rgbFileNam
 
 	// Generate default camera parameters
 	auto fx = depth_focal_length_; // Horizontal focal length
-	auto fy = depth_focal_length_; // Vertcal focal length
+	auto fy = depth_focal_length_; // Vertical focal length
 	auto cx = (static_cast<float>(depth_width_) - 1.f) / 2.f;  // Center x
 	auto cy = (static_cast<float>(depth_height_)- 1.f) / 2.f; // Center y
 
@@ -184,13 +187,13 @@ void DepthFilePointCloudGenerator::loadDepthImageFromFile(std::string rgbFileNam
 			// Check for invalid measurements
 
 			//auto pixel = depth_map[value_idx];
-			auto pixel = 255 - depth_image_data->GetScalarComponentAsFloat (u, v, 0, 0);// / depth_unit_magic;
+			auto pixel = 65535 - depth_image_data->GetScalarComponentAsFloat (u, v, 0, 0);// / depth_unit_magic;
 			//std::cout << "Depthvalue: " << pixel << std::endl;
 			if (pixel != 0 /*&&
 						   pixel != depth_image->getNoSampleValue () &&
 						   pixel != depth_image->getShadowValue () */)
 			{
-				depth2xyz((0.5 * depth_height_ / depth_focal_length_), (0.5 * depth_width_ / depth_focal_length_),
+				depth2xyz(v_viewing_angle, h_viewing_angle,
 					depth_width_, depth_height_, u, v,
 					pixel, pt.x, pt.y, pt.z);
 				//pt.z = pixel;  // millimeters to meters
