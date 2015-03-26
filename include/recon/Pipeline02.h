@@ -14,7 +14,7 @@ public:
 		boost::signals2::signal<void (float)> * triangleSizeUpdate);
 	~Pipeline02(void);
 
-	void processData();
+	void processData() override;
 
 private:
 	DepthThreshold d;

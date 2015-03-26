@@ -30,6 +30,7 @@ float DepthThreshold::getDepthThresholdMax()
 void DepthThreshold::setDepthThresholdMax(float value)
 {
 	depthThreshMax = value;
+	std::cout << "Updated Depth Threshold Max to " << value << std::endl;
 }
 
 float DepthThreshold::getDepthThresholdMin()
@@ -40,4 +41,5 @@ float DepthThreshold::getDepthThresholdMin()
 void DepthThreshold::setDepthThresholdMin(float value)
 {
 	depthThreshMin = value;
+	std::cout << "Updated Depth Threshold Min to " << value << std::endl;
 }

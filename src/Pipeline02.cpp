@@ -22,11 +22,12 @@ Pipeline02::~Pipeline02(void)
 
 void Pipeline02::processData()
 {
-	pp_->setInputCloud(cloud_);
-	pp_->processData();
-	s.setInputCloud(pp_->getOutputCloud());
-	s.processData();
-	mp_->setInputCloud(s.getOutputCloud());
+	//pp_->setInputCloud(cloud_);
+	//pp_->processData();
+	//s.setInputCloud(cloud_);
+	//s.processData();
+	//mp_->setInputCloud(s.getOutputCloud());
+	mp_->setInputCloud(cloud_);
 	mp_->processData();
 	meshCloud_ = mp_->getInputCloud();
 	triangles_ = mp_->getTriangles();
