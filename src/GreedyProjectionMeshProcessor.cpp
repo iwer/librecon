@@ -38,8 +38,8 @@ void GreedyProjectionMeshProcessor::processData()
 
 	// Set typical values for the parameters
 	gp3.setMu (2.5);
-	gp3.setMaximumNearestNeighbors (100);
-	gp3.setMaximumSurfaceAngle(M_PI/4); // 45 degrees
+	gp3.setMaximumNearestNeighbors (150);
+	gp3.setMaximumSurfaceAngle(M_PI/2); // 45 degrees
 	gp3.setMinimumAngle(M_PI/18); // 10 degrees
 	gp3.setMaximumAngle(2*M_PI/3); // 120 degrees
 	gp3.setNormalConsistency(false);

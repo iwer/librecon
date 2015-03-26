@@ -14,7 +14,7 @@ AbstractPointProcessor::~AbstractPointProcessor(void)
 
 void AbstractPointProcessor::setInputCloud(CloudConstPtr cloud)
 {
-	inputCloud_ = cloud;
+	inputCloud_.swap(cloud);
 }
 
 CloudPtr AbstractPointProcessor::getOutputCloud()

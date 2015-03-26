@@ -14,8 +14,7 @@ AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
 }
 
 void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud){
-	cloud_ = nullptr;
-	cloud_ = cloud;
+	cloud_.swap(cloud);
 }
 
 CloudConstPtr AbstractProcessingPipeline::getInputCloud()

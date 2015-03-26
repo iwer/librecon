@@ -26,6 +26,6 @@ TrianglesPtr AbstractMeshProcessor::getTriangles()
 
 void AbstractMeshProcessor::setInputCloud(CloudConstPtr cloud)
 {
-	inputCloud_ = cloud;
+	inputCloud_ .swap(cloud);
 }
 
