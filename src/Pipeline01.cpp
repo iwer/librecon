@@ -4,6 +4,7 @@
 Pipeline01::Pipeline01(boost::signals2::signal<void (float)> * minDepUpdate, 
 					   boost::signals2::signal<void (float)> * maxDepUpdate, 
 					   boost::signals2::signal<void (float)> * triangleSizeUpdate)
+					   : AbstractProcessingPipeline(1)
 {
 
 
@@ -27,7 +28,7 @@ void Pipeline01::updateTriangleSize(float size)
 
 void Pipeline01::processData()
 {
-	pp_->setInputCloud(cloud_);
+	pp_->setInputCloud(clouds_[0]);
 	pp_->processData();
 	mp_->setInputCloud(pp_->getOutputCloud());
 	mp_->processData();
