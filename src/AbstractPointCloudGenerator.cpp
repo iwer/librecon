@@ -3,7 +3,6 @@
 
 AbstractPointCloudGenerator::AbstractPointCloudGenerator(void) :
 	cloud_(new Cloud)
-//	, temp_cloud_(new Cloud)
 {
 }
 

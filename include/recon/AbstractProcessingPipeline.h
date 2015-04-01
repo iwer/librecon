@@ -7,18 +7,19 @@
 class AbstractProcessingPipeline
 {
 public:
-	AbstractProcessingPipeline(void);
+	AbstractProcessingPipeline(int cloudCount);
 	~AbstractProcessingPipeline(void);
 
-	void setInputCloud(CloudConstPtr cloud);
+	void setInputCloud(CloudConstPtr cloud, int cloudIndex);
 	virtual void processData() = 0;
 
-	CloudConstPtr getInputCloud();
+	CloudConstPtr getOutputCloud();
 	TrianglesPtr getTriangles();
 
 
 protected:
-	CloudConstPtr cloud_;
+	int cloudCount_;
+	std::vector<CloudConstPtr> clouds_;
 	CloudConstPtr meshCloud_;
 	TrianglesPtr triangles_;
 

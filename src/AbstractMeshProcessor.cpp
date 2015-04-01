@@ -27,5 +27,6 @@ TrianglesPtr AbstractMeshProcessor::getTriangles()
 void AbstractMeshProcessor::setInputCloud(CloudConstPtr cloud)
 {
 	inputCloud_ .swap(cloud);
+	//triangles_.reset(new std::vector<pcl::Vertices>);
 }
 

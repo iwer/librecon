@@ -1,11 +1,15 @@
 #include "recon/AbstractProcessingPipeline.h"
 
 
-AbstractProcessingPipeline::AbstractProcessingPipeline(void) 
-	: cloud_(new Cloud)
+AbstractProcessingPipeline::AbstractProcessingPipeline(int cloudCount) 
+	: cloudCount_(cloudCount)
 	, meshCloud_(new Cloud)
 	, triangles_(new std::vector<pcl::Vertices>)
 {
+	for(auto i = 0; i < cloudCount_; i++) 
+	{
+		clouds_.push_back(CloudConstPtr(new Cloud));
+	}
 }
 
 
@@ -13,11 +17,14 @@ AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
 {
 }
 
-void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud){
-	cloud_.swap(cloud);
+void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud, int cloudIndex)
+{
+	if(cloudIndex<cloudCount_){
+		clouds_[cloudIndex].swap(cloud);
+	}
 }
 
-CloudConstPtr AbstractProcessingPipeline::getInputCloud()
+CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
 {
 	return meshCloud_;
 }

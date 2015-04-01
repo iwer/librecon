@@ -22,7 +22,7 @@ SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
 #
 # Debugging Options
 #
-SET (CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
+SET (CMAKE_VERBOSE_MAKEFILE 1) # Use 1 for debugging, 0 for release
 
 #
 # Project Output Paths
