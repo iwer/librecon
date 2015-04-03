@@ -18,22 +18,22 @@ GreedyProjectionMeshProcessor::~GreedyProjectionMeshProcessor(void)
 
 void GreedyProjectionMeshProcessor::setMaxNearestNeighbours(int n)
 {
-	//maxNearestNeighbours_ = n;
+	maxNearestNeighbours_ = n;
 }
 
 void GreedyProjectionMeshProcessor::setMu(float mu)
 {
-	//mu_ = mu;
+	mu_ = mu;
 }
 
 void GreedyProjectionMeshProcessor::setMaxEdgeLength(float edgeLength)
 {
-	//maxEdgeLength_ = edgeLength;
+	maxEdgeLength_ = edgeLength;
 }
 
 void GreedyProjectionMeshProcessor::setNormalKNeighbours(int k)
 {
-	//normalKNeighbours_ = k;
+	normalKNeighbours_ = k;
 }
 
 void GreedyProjectionMeshProcessor::processData() 

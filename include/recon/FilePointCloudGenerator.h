@@ -3,6 +3,7 @@
 class FilePointCloudGenerator : public AbstractPointCloudGenerator
 {
 public:
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 	void aquireFrame() override;
 	void start() override;
 	void stop() override;

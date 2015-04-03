@@ -18,6 +18,8 @@ SET (APPLICATION_VENDOR_NAME "Interactive Immersive Environments")
 SET (APPLICATION_VENDOR_URL "i2e.informatik.haw-hamburg.de")
 SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
 
+add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT ) #-H )
+
 
 #
 # Debugging Options
