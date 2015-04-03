@@ -18,7 +18,7 @@ void PointCloudSampler::processData() {
 		vg.setInputCloud(inputCloud_);
 		vg.filter(*outputCloud_);
 	}
-	std::cout << "Sampler: " << inputCloud_->size() << " : " << outputCloud_->size() << std::endl;
+	//std::cout << "Sampler: " << inputCloud_->size() << " : " << outputCloud_->size() << std::endl;
 }
 
 float PointCloudSampler::getResolution() const

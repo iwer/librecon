@@ -5,6 +5,7 @@
 
 class AbstractPointCloudGenerator {
 public:
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 	AbstractPointCloudGenerator(void);
 	~AbstractPointCloudGenerator(void);
 
@@ -18,8 +19,8 @@ public:
 protected:
 	boost::mutex cloud_mutex_;
 	/**
-	 * Cloud for the generator to write into. Access has to be secured via cloud_mutex_.
-	 */
+	* Cloud for the generator to write into. Access has to be secured via cloud_mutex_.
+	*/
 	CloudConstPtr cloud_;
 private:
 

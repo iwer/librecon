@@ -7,7 +7,8 @@ Pipeline02::Pipeline02(int inputCloudCount,
 					   boost::signals2::signal<void (float)> * triangleSizeUpdate,
 					   boost::signals2::signal<void (int)> * normalKNeighbourUpdate,
 					   boost::signals2::signal<void (float)> * muUpdate,
-					   boost::signals2::signal<void (int)> * maxNearestNeighboursUpdate)
+					   boost::signals2::signal<void (int)> * maxNearestNeighboursUpdate,
+					   boost::signals2::signal<void (float)> * updateSampleResolution)
 					   : AbstractProcessingPipeline(inputCloudCount)
 {
 
@@ -21,6 +22,7 @@ Pipeline02::Pipeline02(int inputCloudCount,
 	normalKNeighbourUpdate->connect(boost::bind(&GreedyProjectionMeshProcessor::setNormalKNeighbours, &g, _1));
 	muUpdate->connect(boost::bind(&GreedyProjectionMeshProcessor::setMu, &g, _1));
 	maxNearestNeighboursUpdate->connect(boost::bind(&GreedyProjectionMeshProcessor::setMaxNearestNeighbours, &g, _1));
+	updateSampleResolution->connect(boost::bind(&PointCloudSampler::setResolution, &s, _1));
 }
 
 
@@ -30,24 +32,23 @@ Pipeline02::~Pipeline02(void)
 
 void Pipeline02::processData()
 {
-	//pp_->setInputCloud(cloud_);
-	//pp_->processData();
-	//s.setInputCloud(cloud_);
-	//s.processData();
-	//mp_->setInputCloud(s.getOutputCloud());
+
 	Cloud combinedCloud;
-	
+
 	for (auto &c : clouds_)
 	{
 		s.setInputCloud(c);
 		s.processData();
 		combinedCloud += *s.getOutputCloud();
+		//combinedCloud += *c;
+		std::cout << "Combined cloud size: " << combinedCloud.size() << std::endl;
 	}
 
 
-	
-	//mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
-	//mp_->processData();
-	meshCloud_ = boost::make_shared<Cloud>(combinedCloud);
+
+	mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
+	mp_->processData();
+	meshCloud_ = mp_->getInputCloud();
 	triangles_ = mp_->getTriangles();
+	//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud);
 }

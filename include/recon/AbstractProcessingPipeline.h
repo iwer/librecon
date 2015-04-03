@@ -7,6 +7,7 @@
 class AbstractProcessingPipeline
 {
 public:
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 	AbstractProcessingPipeline(int cloudCount);
 	~AbstractProcessingPipeline(void);
 
