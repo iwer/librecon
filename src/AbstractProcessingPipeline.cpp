@@ -1,35 +1,39 @@
 #include "recon/AbstractProcessingPipeline.h"
 
 
-AbstractProcessingPipeline::AbstractProcessingPipeline(int cloudCount) 
-	: cloudCount_(cloudCount)
-	, meshCloud_(new Cloud)
-	, triangles_(new std::vector<pcl::Vertices>)
+namespace recon
 {
-	for(auto i = 0; i < cloudCount_; i++) 
+	AbstractProcessingPipeline::AbstractProcessingPipeline(int cloudCount) 
+		: cloudCount_(cloudCount)
+		, meshCloud_(new Cloud)
+		, triangles_(new std::vector<pcl::Vertices>)
 	{
-		clouds_.push_back(CloudConstPtr(new Cloud));
+		for(auto i = 0; i < cloudCount_; i++) 
+		{
+			clouds_.push_back(CloudConstPtr(new Cloud));
+		}
 	}
-}
 
 
-AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
-{
-}
-
-void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud, int cloudIndex)
-{
-	if(cloudIndex<cloudCount_){
-		clouds_[cloudIndex].swap(cloud);
+	AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
+	{
 	}
-}
 
-CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
-{
-	return meshCloud_;
-}
+	void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud, int cloudIndex)
+	{
+		if(cloudIndex<cloudCount_){
+			clouds_[cloudIndex].swap(cloud);
+		}
+	}
 
-TrianglesPtr AbstractProcessingPipeline::getTriangles()
-{
-	return triangles_;
+	CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
+	{
+		return meshCloud_;
+	}
+
+	TrianglesPtr AbstractProcessingPipeline::getTriangles()
+	{
+		return triangles_;
+	}
+
 }
