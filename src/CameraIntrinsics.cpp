@@ -1,7 +1,7 @@
 #include <recon/CameraIntrinsics.h>
 #include <valarray>
 
-CameraIntrinsics::CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight)
+recon::CameraIntrinsics::CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight)
 	: focalLength_(focalLength)
 	, sensorWidth_(sensorWidth)
 	,sensorHeight_(sensorHeight)

@@ -1,25 +1,28 @@
 #include <vector>
 //#include <Eigen/src/Core/Matrix.h>
 
-class CameraIntrinsics
+namespace recon
 {
-public:
-	CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight);
+	class CameraIntrinsics
+	{
+	public:
+		CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight);
 
-private:
-	float focalLength_;
-	
-	int sensorWidth_;
-	int sensorHeight_;
+	private:
+		float focalLength_;
 
-	std::vector<int> principalPoint_;
+		int sensorWidth_;
+		int sensorHeight_;
 
-	int imageWidth_;
-	int imageHeight_;
+		std::vector<int> principalPoint_;
 
-	//Eigen::Matrix4f intrinsicMatrix_;
+		int imageWidth_;
+		int imageHeight_;
 
-	float hFov_;
-	float vFov_;
-};
+		//Eigen::Matrix4f intrinsicMatrix_;
 
+		float hFov_;
+		float vFov_;
+	};
+
+}

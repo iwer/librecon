@@ -7,22 +7,25 @@
 /**
   * Very fast Triangulator. Relies on organized Point Clouds because it exploits the known neighbourhood relations.
   */
-class OrganizedFastMeshProcessor :
-	public AbstractMeshProcessor
+namespace recon
 {
-public:
-	OrganizedFastMeshProcessor(void);
-	~OrganizedFastMeshProcessor(void);
+	class OrganizedFastMeshProcessor :
+		public AbstractMeshProcessor
+	{
+	public:
+		OrganizedFastMeshProcessor(void);
+		~OrganizedFastMeshProcessor(void);
 
-	void processData();
+		void processData() override;
 
-	int getEdgeLength();
-	void setEdgeLength(int value); 
-private:
-	pcl::OrganizedFastMesh<PointType> ofm;
+		int getEdgeLength();
+		void setEdgeLength(int value); 
+	private:
+		pcl::OrganizedFastMesh<PointType> ofm_;
 
-	int ofmPixelSize;
+		int ofmPixelSize_;
 
 
-};
+	}; 
+}
 

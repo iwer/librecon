@@ -1,23 +1,26 @@
 #include "recon/AbstractPointProcessor.h"
 
 
-AbstractPointProcessor::AbstractPointProcessor(void) :
-	inputCloud_(new Cloud),
-	outputCloud_(new Cloud)
+namespace recon
 {
-}
+	AbstractPointProcessor::AbstractPointProcessor(void) :
+		inputCloud_(new Cloud),
+		outputCloud_(new Cloud)
+	{
+	}
 
 
-AbstractPointProcessor::~AbstractPointProcessor(void)
-{
-}
+	AbstractPointProcessor::~AbstractPointProcessor(void)
+	{
+	}
 
-void AbstractPointProcessor::setInputCloud(CloudConstPtr cloud)
-{
-	inputCloud_.swap(cloud);
-}
+	void AbstractPointProcessor::setInputCloud(CloudConstPtr cloud)
+	{
+		inputCloud_.swap(cloud);
+	}
 
-CloudPtr AbstractPointProcessor::getOutputCloud()
-{
-	return outputCloud_;
+	CloudPtr AbstractPointProcessor::getOutputCloud()
+	{
+		return outputCloud_;
+	} 
 }

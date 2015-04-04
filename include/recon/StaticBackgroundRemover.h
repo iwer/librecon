@@ -1,16 +1,19 @@
 #include "AbstractPointProcessor.h"
 #include <pcl/segmentation/segment_differences.h>
 
-class StaticBackgroundRemover : AbstractPointProcessor {
+namespace recon
+{
+	class StaticBackgroundRemover : AbstractPointProcessor {
 
-private:
-	CloudConstPtr backGroundCloud;
-	pcl::SegmentDifferences<PointType> sd;
+	public:
+		void processData() override;
 
-public:
-	void processData() override;
+		void getBackGroundCloud();
 
-	void getBackGroundCloud();
+		void setBackGroundCloud(CloudConstPtr backGroundCloud);
+	private:
+		CloudConstPtr backGroundCloud_;
+		pcl::SegmentDifferences<PointType> sd_;
 
-	void setBackGroundCloud(CloudConstPtr backGroundCloud);
-};
+	}; 
+}

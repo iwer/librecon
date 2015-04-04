@@ -1,25 +1,29 @@
 #include "recon/AbstractPointCloudGenerator.h"
 
 
-AbstractPointCloudGenerator::AbstractPointCloudGenerator(void) :
-	cloud_(new Cloud)
+namespace recon
 {
-}
-
-
-AbstractPointCloudGenerator::~AbstractPointCloudGenerator(void)
-{
-}
-
-CloudConstPtr AbstractPointCloudGenerator::getOutputCloud()
-{
-	CloudConstPtr temp_cloud_;
-
-	if(cloud_mutex_.try_lock()) {
-		temp_cloud_.swap(cloud_);
-		cloud_mutex_.unlock();
+	AbstractPointCloudGenerator::AbstractPointCloudGenerator(void) :
+		cloud_(new Cloud)
+	{
 	}
 
-	return temp_cloud_;
+
+	AbstractPointCloudGenerator::~AbstractPointCloudGenerator(void)
+	{
+	}
+
+	CloudConstPtr AbstractPointCloudGenerator::getOutputCloud()
+	{
+		CloudConstPtr temp_cloud_;
+
+		if(cloud_mutex_.try_lock()) {
+			temp_cloud_.swap(cloud_);
+			cloud_mutex_.unlock();
+		}
+
+		return temp_cloud_;
+	} 
 }
+
 

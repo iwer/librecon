@@ -2,18 +2,21 @@
 
 #include "typedefs.h"
 
-class AbstractPointProcessor
+namespace recon
 {
-public:
-	AbstractPointProcessor(void);
-	virtual ~AbstractPointProcessor(void);
+	class AbstractPointProcessor
+	{
+	public:
+		AbstractPointProcessor(void);
+		virtual ~AbstractPointProcessor(void);
 
-	void setInputCloud(CloudConstPtr);
-	virtual void processData() = 0;
-	CloudPtr getOutputCloud();
+		void setInputCloud(CloudConstPtr);
+		virtual void processData() = 0;
+		CloudPtr getOutputCloud();
 
-protected:
-	CloudConstPtr inputCloud_;
-	CloudPtr outputCloud_;
-};
+	protected:
+		CloudConstPtr inputCloud_;
+		CloudPtr outputCloud_;
+	};
+}
 

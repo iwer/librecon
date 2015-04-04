@@ -1,8 +1,12 @@
 #include "AbstractPointProcessor.h"
 
-class PointCloudSmoother : AbstractPointProcessor {
+namespace recon
+{
+	class PointCloudSmoother : AbstractPointProcessor {
 
 
-public:
-	void processData() override;
-};
+	public:
+		void processData() override;
+	};
+
+}
