@@ -13,9 +13,9 @@ IF (NOT DEFINED project_build_shared)
    ENDIF (CMAKE_CROSSCOMPILING)
 ENDIF (NOT DEFINED project_build_shared)
 
-#IF (NOT DEFINED project_build_static)
-#   SET(project_build_static 1)
-#ENDIF (NOT DEFINED project_build_static)
+IF (NOT DEFINED project_build_static)
+   SET(project_build_static 1)
+ENDIF (NOT DEFINED project_build_static)
 
 IF (WIN32)
 	SET (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_WIN32_WINNT=0x0501")
