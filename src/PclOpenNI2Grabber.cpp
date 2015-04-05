@@ -6,8 +6,16 @@ namespace recon
 	PclOpenNI2Grabber::PclOpenNI2Grabber(void)
 	{
 		grabber_ =  new pcl::io::OpenNI2Grabber("", pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode);
+		double depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y;
+		grabber_->getDepthCameraIntrinsics(depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y);
 	}
 
+	PclOpenNI2Grabber::PclOpenNI2Grabber(std::string uri)
+	{
+		grabber_ =  new pcl::io::OpenNI2Grabber(uri, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode);
+		double depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y;
+		grabber_->getDepthCameraIntrinsics(depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y);
+	}
 
 	PclOpenNI2Grabber::~PclOpenNI2Grabber(void)
 	{
@@ -27,6 +35,16 @@ namespace recon
 		cloud_connection_ = grabber_->registerCallback (cloud_cb);
 	}
 
+	CameraIntrinsics::Ptr PclOpenNI2Grabber::getDepthIntrinsics()
+	{
+		double depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y;
+		grabber_->getDepthCameraIntrinsics(depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y);
+		auto x_res = grabber_->getDevice()->getDepthVideoMode().x_resolution_;
+		auto y_res = grabber_->getDevice()->getDepthVideoMode().y_resolution_;
+		CameraIntrinsics intrinsics(depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y, x_res, y_res);
+		return boost::make_shared<CameraIntrinsics>(intrinsics);
+	}
+
 	void PclOpenNI2Grabber::stop()
 	{
 		grabber_->stop();
@@ -41,17 +59,5 @@ namespace recon
 	}
 
 
-	void PclOpenNI2Grabber::checkConnectedDevices()
-	{
-		auto man = pcl::io::openni2::OpenNI2DeviceManager::getInstance();
-		auto deviceInfo = man->getConnectedDeviceInfos();
-		for (auto &d : *deviceInfo)
-		{
-			std::cout << "Device: " << std::endl;
-			std::cout << " * Vendor:	" << d.vendor_ << std::endl;
-			std::cout << " * Name:		" << d.name_ << std::endl;
-			std::cout << " * ProductId:	" << d.product_id_ << std::endl;
-			std::cout << " * URI:		" << d.uri_ << std::endl;
-		}
-	}
+
 }

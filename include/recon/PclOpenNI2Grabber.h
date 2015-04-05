@@ -3,7 +3,7 @@
 #include "typedefs.h"
 #include "AbstractPointCloudGenerator.h"
 #include <pcl/io/openni2_grabber.h>
-
+#include <recon/CameraIntrinsics.h>
 namespace recon
 {
 	class PclOpenNI2Grabber :
@@ -11,6 +11,7 @@ namespace recon
 	{
 	public:
 		PclOpenNI2Grabber(void);
+		PclOpenNI2Grabber(std::string uri);
 		~PclOpenNI2Grabber(void);
 
 		void aquireFrame() override;
@@ -19,7 +20,7 @@ namespace recon
 		void start() override;
 		void stop() override;
 
-		static void checkConnectedDevices();
+		CameraIntrinsics::Ptr getDepthIntrinsics();
 
 	private:
 		pcl::io::OpenNI2Grabber * grabber_;
