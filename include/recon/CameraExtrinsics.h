@@ -1,12 +1,14 @@
 #pragma once
 #include <Eigen/StdVector>
 #include <Eigen/Geometry>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 namespace recon
 {
 	class CameraExtrinsics
 	{
 	public:
+		typedef boost::shared_ptr<CameraExtrinsics> Ptr;
 		CameraExtrinsics(void);
 		~CameraExtrinsics(void);
 

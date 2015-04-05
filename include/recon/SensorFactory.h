@@ -1,6 +1,8 @@
 #pragma once
-#include "recon/AbstractPointCloudGenerator.h"
-
+#include "recon/AbstractSensor.h"
+#include <pcl/io/openni2/openni2_device_info.h>
+#include <vector>
+#include <string>
 
 namespace recon
 {
@@ -9,8 +11,12 @@ namespace recon
 	public:
 		SensorFactory();
 		~SensorFactory();
-		//static AbstractPointCloudGenerator::Ptr createFilePointCloudGenerator();
-		//static AbstractPointCloudGenerator::Ptr createPclOpenNI2Grabber();
+		AbstractSensor::Ptr createFilePointCloudGenerator();
+		AbstractSensor::Ptr createPclOpenNI2Grabber();
+		void checkConnectedDevices();
+	private:
+		std::vector<pcl::io::openni2::OpenNI2DeviceInfo> deviceIds_;
+		int nextSensorIndex_;
 	};
 
 }

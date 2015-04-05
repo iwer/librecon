@@ -2,18 +2,26 @@
 #include "recon/typedefs.h"
 #include "recon/CameraIntrinsics.h"
 #include "recon/CameraExtrinsics.h"
+#include "recon/AbstractPointCloudGenerator.h"
 
 namespace recon
 {
 	class AbstractSensor
 	{
 	public:
+		typedef boost::shared_ptr<AbstractSensor> Ptr;
+
 		AbstractSensor(void);
 		~AbstractSensor(void);
-	private:
+
+	protected:
 		CloudConstPtr background_;
-		CameraIntrinsics intrinsics_;
-		CameraExtrinsics extrinsics_;
+		CameraIntrinsics::Ptr intrinsics_;
+		CameraExtrinsics::Ptr extrinsics_;
+		//CameraIntrinsics::Ptr rgbIntrinsics_;
+		//CameraExtrinsics::Ptr rgbExtrinsics_;
+
+		AbstractPointCloudGenerator * cloudSource_;
 	};
 
 }
