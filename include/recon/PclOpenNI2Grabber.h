@@ -19,9 +19,12 @@ namespace recon
 		void start() override;
 		void stop() override;
 
+		static void checkConnectedDevices();
+
 	private:
 		pcl::io::OpenNI2Grabber * grabber_;
 		boost::signals2::connection cloud_connection_;
+
 
 	}; 
 }

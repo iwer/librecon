@@ -6,6 +6,7 @@ namespace recon
 	class CameraIntrinsics
 	{
 	public:
+		CameraIntrinsics();
 		CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight);
 
 	private:
