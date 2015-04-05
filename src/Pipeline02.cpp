@@ -30,6 +30,7 @@ namespace recon
 
 	Pipeline02::~Pipeline02(void)
 	{
+
 	}
 
 	void Pipeline02::processData()
@@ -39,19 +40,27 @@ namespace recon
 
 		for (auto &c : clouds_)
 		{
-			s_.setInputCloud(c);
-			s_.processData();
-			combinedCloud += *s_.getOutputCloud();
-			//combinedCloud += *c;
-			std::cout << "Combined cloud size: " << combinedCloud.size() << std::endl;
+
+			if(c->size() > 0){
+				s_.setInputCloud(c);
+				s_.processData();
+				combinedCloud += *s_.getOutputCloud();
+				//combinedCloud += *c;
+				std::cout << "Combined cloud size: " << combinedCloud.size() << std::endl;
+			}
+
 		}
 
 
 
-		mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
-		mp_->processData();
-		meshCloud_ = mp_->getInputCloud();
-		triangles_ = mp_->getTriangles();
-		//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud);
-	} 
+		if (combinedCloud.size() > 0)	{
+			mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
+			mp_->processData();
+			meshCloud_ = mp_->getInputCloud();
+			triangles_ = mp_->getTriangles();
+			//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud);
+		} 
+		//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud); 
+
+	}
 }

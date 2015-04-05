@@ -41,4 +41,17 @@ namespace recon
 	}
 
 
+	void PclOpenNI2Grabber::checkConnectedDevices()
+	{
+		auto man = pcl::io::openni2::OpenNI2DeviceManager::getInstance();
+		auto deviceInfo = man->getConnectedDeviceInfos();
+		for (auto &d : *deviceInfo)
+		{
+			std::cout << "Device: " << std::endl;
+			std::cout << " * Vendor:	" << d.vendor_ << std::endl;
+			std::cout << " * Name:		" << d.name_ << std::endl;
+			std::cout << " * ProductId:	" << d.product_id_ << std::endl;
+			std::cout << " * URI:		" << d.uri_ << std::endl;
+		}
+	}
 }
