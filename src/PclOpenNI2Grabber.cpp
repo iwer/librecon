@@ -1,4 +1,5 @@
 #include "recon/PclOpenNI2Grabber.h"
+#include <pcl/common/io.h>
 
 namespace recon
 {
@@ -31,7 +32,7 @@ namespace recon
 	{
 		grabber_->start();
 		// connect cloud callback to openni grabber
-		boost::function<void (const CloudConstPtr&) > cloud_cb = boost::bind (&PclOpenNI2Grabber::cloud_callback, this, _1);
+		boost::function<void (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr&) > cloud_cb = boost::bind (&PclOpenNI2Grabber::cloud_callback, this, _1);
 		cloud_connection_ = grabber_->registerCallback (cloud_cb);
 	}
 
@@ -51,10 +52,12 @@ namespace recon
 		cloud_connection_.disconnect();
 	}
 
-	void PclOpenNI2Grabber::cloud_callback (const CloudConstPtr& cloud)
+	void PclOpenNI2Grabber::cloud_callback (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr& cloud)
 	{
 		boost::mutex::scoped_lock lock (cloud_mutex_);
-		cloud_ = cloud;
+		Cloud alphaRemovedCloud;
+		pcl::copyPointCloud<pcl::PointXYZRGBA, PointType>(*cloud, alphaRemovedCloud);
+		cloud_ = boost::make_shared<Cloud>(alphaRemovedCloud);
 		//std::cout << "Grabbed clouds size: " << cloud_->size() << std::endl;
 	}
 

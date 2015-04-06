@@ -11,12 +11,13 @@ namespace recon
 	public:
 		SensorFactory();
 		~SensorFactory();
-		AbstractSensor::Ptr createFilePointCloudGenerator();
+		AbstractSensor::Ptr createFilePointCloudGenerator(std::string fileName, std::string backgroundFileName);
 		AbstractSensor::Ptr createPclOpenNI2Grabber();
 		void checkConnectedDevices();
 	private:
-		std::vector<pcl::io::openni2::OpenNI2DeviceInfo> deviceIds_;
-		int nextSensorIndex_;
+		std::vector<pcl::io::openni2::OpenNI2DeviceInfo> openNIDeviceIds_;
+		int nextOpenNISensorIndex_;
+		int nextFileSensorIndex_;
 	};
 
 }
