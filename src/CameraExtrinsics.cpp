@@ -4,17 +4,22 @@
 namespace recon
 {
 	CameraExtrinsics::CameraExtrinsics(void)
-		: translation_(Eigen::Vector3f())
+		: translation_(Eigen::Vector4f(0,0,0,1))
 		, rotation_(Eigen::Quaternionf::Identity())
 	{
 	}
 
+	CameraExtrinsics::CameraExtrinsics(Eigen::Vector4f &translation, Eigen::Quaternionf &rotation)
+		: translation_(translation)
+		, rotation_(rotation)
+	{
+	}
 
 	CameraExtrinsics::~CameraExtrinsics(void)
 	{
 	}
 
-	Eigen::Vector3f CameraExtrinsics::getTranslation()
+	Eigen::Vector4f CameraExtrinsics::getTranslation()
 	{
 		return translation_;
 	}

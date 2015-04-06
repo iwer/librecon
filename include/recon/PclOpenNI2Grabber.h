@@ -15,7 +15,7 @@ namespace recon
 		~PclOpenNI2Grabber(void);
 
 		void aquireFrame() override;
-		void cloud_callback (const CloudConstPtr& cloud);
+		void cloud_callback (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr& cloud);
 
 		void start() override;
 		void stop() override;
