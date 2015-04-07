@@ -1,25 +1,36 @@
+#pragma once
 #include <vector>
-//#include <Eigen/src/Core/Matrix.h>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 namespace recon
 {
 	class CameraIntrinsics
 	{
 	public:
-		CameraIntrinsics(float focalLength, int sensorWidth, float sensorHeight);
+		typedef boost::shared_ptr<CameraIntrinsics> Ptr;
+
+		CameraIntrinsics();
+		CameraIntrinsics(float focalLength, int sensorWidth, int sensorHeight);
+		CameraIntrinsics(float focalLengthX, float focalLengthY, float principalPointX, float principalPointY, int sensorWidth, int sensorHeight);
+
+		float getFocalLengthX() const;
+		float getFocalLengthY() const;
+		int getSensorWidth() const;
+		int getSensorHeight() const;
+		float getPrincipalPointX() const;
+		float getPrincipalPointY() const;
+		float getHFov() const;
+		float getVFov() const;
 
 	private:
-		float focalLength_;
+		float focalLengthX_;
+		float focalLengthY_;
 
 		int sensorWidth_;
 		int sensorHeight_;
 
-		std::vector<int> principalPoint_;
-
-		int imageWidth_;
-		int imageHeight_;
-
-		//Eigen::Matrix4f intrinsicMatrix_;
+		float principalPointX_;
+		float principalPointY_;
 
 		float hFov_;
 		float vFov_;
