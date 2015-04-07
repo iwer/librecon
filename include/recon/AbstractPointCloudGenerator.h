@@ -7,9 +7,11 @@ namespace recon
 {
 	class AbstractPointCloudGenerator {
 	public:
+		typedef boost::shared_ptr<AbstractPointCloudGenerator> Ptr; 
 		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractPointCloudGenerator(void);
 		~AbstractPointCloudGenerator(void);
+
 
 		virtual void aquireFrame() = 0;
 		CloudConstPtr getOutputCloud();

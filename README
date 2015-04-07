@@ -13,6 +13,12 @@
   * GCC or an alternative, reasonably conformant C++ compiler.
   * Boost C++ Libraries v1.55+ [HEADERS and LIBRARIES]
   * UnitTest++ (a.k.a. unittest-cpp)
+  * Flann
+  * OpenNI2
+  * qHull
+  * Eigen3
+  * Qt 4.8.6
+  * VTK
   * Pointcloud Library 1.7+
 
 == 2. BUILDING ==
