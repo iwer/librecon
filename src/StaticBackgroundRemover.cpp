@@ -1,20 +1,26 @@
 #include "recon/StaticBackgroundRemover.h"
 namespace recon
 {
-
-	void StaticBackgroundRemover::processData() {
-		// TODO - implement StaticBackgroundRemover::processData
-		throw "Not yet implemented";
+	StaticBackgroundRemover::StaticBackgroundRemover()
+		: AbstractPointProcessor()
+	{
 	}
 
-	void StaticBackgroundRemover::getBackGroundCloud() {
-		// TODO - implement StaticBackgroundRemover::getBackGroundCloud
-		throw "Not yet implemented";
+	StaticBackgroundRemover::~StaticBackgroundRemover()
+	{
+	}
+
+	void StaticBackgroundRemover::processData() {
+		if(inputCloud_->size() > 0) {
+			sd_.setInputCloud(inputCloud_);
+			sd_.setDistanceThreshold(1);
+			sd_.setTargetCloud(backGroundCloud_);
+			sd_.segment(*outputCloud_);
+		}
 	}
 
 	void StaticBackgroundRemover::setBackGroundCloud(CloudConstPtr backGroundCloud) {
-		// TODO - implement StaticBackgroundRemover::setBackGroundCloud
-		throw "Not yet implemented";
+		backGroundCloud_.swap(backGroundCloud);
 	}
 
 }

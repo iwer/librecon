@@ -4,6 +4,7 @@
 #include "GreedyProjectionMeshProcessor.h"
 #include <boost/signals2.hpp>
 #include "PointCloudSampler.h"
+#include "StaticBackgroundRemover.h"
 
 namespace recon
 {
@@ -26,6 +27,7 @@ namespace recon
 
 	private:
 		DepthThreshold d_;
+		StaticBackgroundRemover bgr_;
 		PointCloudSampler s_;
 		GreedyProjectionMeshProcessor g_;
 	}; 

@@ -38,29 +38,41 @@ namespace recon
 
 		Cloud combinedCloud;
 
-		for (auto &c : clouds_)
+		// Single input cloud processing
+		for (auto &s : sensors_)
 		{
+			auto tmpCloud = s->getCloudSource()->getOutputCloud();
+			if(tmpCloud && tmpCloud->size() > 0){
+				// Depth threshold
+				d_.setInputCloud(tmpCloud);
+				d_.processData();
 
-			if(c->size() > 0){
-				s_.setInputCloud(c);
+				// Remove Background
+				//bgr_.setInputCloud(tmpCloud);
+				//bgr_.setBackGroundCloud(s->getBackground());
+				//bgr_.processData();
+				//std::cout << "Cloud size after bg removal: " << bgr_.getOutputCloud()->size() << std::endl;
+				// Downsample
+				s_.setInputCloud(d_.getOutputCloud());
 				s_.processData();
+
+				// Merge into combined cloud
 				combinedCloud += *s_.getOutputCloud();
 				//combinedCloud += *c;
 				std::cout << "Combined cloud size: " << combinedCloud.size() << std::endl;
+			} else
+			{
+				//std::cerr << "No cloud obtained from sensor" << std::endl;
 			}
-
 		}
 
-
-
+		// Combined cloud processing
 		if (combinedCloud.size() > 0)	{
 			mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
 			mp_->processData();
 			meshCloud_ = mp_->getInputCloud();
 			triangles_ = mp_->getTriangles();
-			//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud);
 		} 
-		//meshCloud_ =  boost::make_shared<Cloud>(combinedCloud); 
 
 	}
 }
