@@ -65,4 +65,9 @@ namespace recon
 	{
 		rgbExtrinsics_ = rgbExtrinsics;
 	}
+
+	AbstractPointCloudGenerator* AbstractSensor::getCloudSource() const
+	{
+		return cloudSource_;
+	}
 }

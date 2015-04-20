@@ -30,7 +30,7 @@ namespace recon
 
 	void Pipeline01::processData()
 	{
-		pp_->setInputCloud(clouds_[0]);
+		pp_->setInputCloud(sensors_[0]->getCloudSource()->getOutputCloud());
 		pp_->processData();
 		mp_->setInputCloud(pp_->getOutputCloud());
 		mp_->processData();

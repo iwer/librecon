@@ -14,7 +14,7 @@ namespace recon
 		typedef boost::shared_ptr<AbstractSensor> Ptr;
 
 		AbstractSensor(void);
-		~AbstractSensor(void);
+		virtual ~AbstractSensor(void);
 
 		CloudConstPtr getBackground() const;
 		void setBackground(void);
@@ -27,6 +27,8 @@ namespace recon
 		CameraExtrinsics::Ptr getRgbExtrinsics() const;
 		void setRgbExtrinsics(const CameraExtrinsics::Ptr& rgbExtrinsics);
 
+		AbstractPointCloudGenerator* getCloudSource() const;
+
 	protected:
 		virtual void setBackGroundImpl(void) = 0;
 
@@ -36,7 +38,7 @@ namespace recon
 		CameraIntrinsics::Ptr rgbIntrinsics_;
 		CameraExtrinsics::Ptr rgbExtrinsics_;
 
-		AbstractPointCloudGenerator * cloudSource_;
+		AbstractPointCloudGenerator* cloudSource_;
 	};
 
 }

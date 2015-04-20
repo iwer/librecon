@@ -3,13 +3,14 @@
 
 namespace recon
 {
-	class StaticBackgroundRemover : AbstractPointProcessor {
-
+	class StaticBackgroundRemover 
+		: public AbstractPointProcessor 
+	{
 	public:
+		StaticBackgroundRemover();
+		~StaticBackgroundRemover() override;
+
 		void processData() override;
-
-		void getBackGroundCloud();
-
 		void setBackGroundCloud(CloudConstPtr backGroundCloud);
 	private:
 		CloudConstPtr backGroundCloud_;

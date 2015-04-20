@@ -13,7 +13,8 @@ namespace recon
 		cloudSource_ = grabber_;
 		grabber_->start();
 		depthExtrinsics_ = grabber_->getExtrinsics();
-		std::cout << "Created new Simulated OpenNI2 Sensor" << std::endl;
+		std::cout << "Created new Simulated OpenNI2 Sensor, cloud source: '" << fileName_ << "', Background source: '" 
+			<< backgroundFileName_ << "'" << std::endl;
 		std::cout << "Extrinsic translation: " << std::endl << depthExtrinsics_->getTranslation() << std::endl;
 		std::cout << "Extrinsic rotation   : "<< std::endl <<  depthExtrinsics_->getRotation().toRotationMatrix() << std::endl;
 	}
@@ -30,6 +31,8 @@ namespace recon
 		auto err = reader.read(backgroundFileName_, cloud);
 		if(!err){
 			background_= boost::make_shared<Cloud>(cloud);
+			std::cout << "Loaded " << background_->size() << " points from '" << backgroundFileName_ << "'" << std::endl;
+
 		} else
 		{
 			background_ = CloudConstPtr(new Cloud);
