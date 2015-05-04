@@ -1,4 +1,5 @@
 #include "recon/Pipeline02.h"
+#include <pcl/common/transforms.h>
 
 namespace recon
 {
@@ -51,25 +52,26 @@ namespace recon
 				//bgr_.setInputCloud(tmpCloud);
 				//bgr_.setBackGroundCloud(s->getBackground());
 				//bgr_.processData();
-				//std::cout << "Cloud size after bg removal: " << bgr_.getOutputCloud()->size() << std::endl;
-				// Downsample
-				s_.setInputCloud(d_.getOutputCloud());
-				s_.processData();
+
+				// Transform using extrinsics
+				CloudPtr cloudT(new Cloud);
+				pcl::transformPointCloud(*d_.getOutputCloud(), *cloudT, s->getDepthExtrinsics()->getTransformation());
+
 
 				// Merge into combined cloud
-				combinedCloud += *s_.getOutputCloud();
-				//combinedCloud += *c;
-				std::cout << "Combined cloud size: " << combinedCloud.size() << std::endl;
-			} else
-			{
-				//std::cerr << "No cloud obtained from sensor" << std::endl;
+				combinedCloud += *cloudT;
+
 			}
 		}
 
 		// Combined cloud processing
 		if (combinedCloud.size() > 0)	{
-			mp_->setInputCloud(boost::make_shared<Cloud>(combinedCloud));
-			mp_->processData();
+			// Downsample
+			s_.setInputCloud(boost::make_shared<Cloud>(combinedCloud));
+			s_.processData();
+
+			mp_->setInputCloud(s_.getOutputCloud());
+			//mp_->processData();
 			meshCloud_ = mp_->getInputCloud();
 			triangles_ = mp_->getTriangles();
 		} 

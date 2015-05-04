@@ -6,7 +6,7 @@ namespace recon
 	class FilePointCloudGenerator : public AbstractPointCloudGenerator
 	{
 	public:
-		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+		//EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		FilePointCloudGenerator(std::string filename);
 		~FilePointCloudGenerator();
 		

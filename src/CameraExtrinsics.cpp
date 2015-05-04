@@ -29,9 +29,9 @@ namespace recon
 		return rotation_;
 	}
 
-	Eigen::Affine3f CameraExtrinsics::getTransformation()
+		Eigen::Affine3f CameraExtrinsics::getTransformation()
 	{
-		Eigen::Affine3f transform = Eigen::Affine3f::Identity();
+		auto transform = Eigen::Affine3f::Identity();
 		transform.translation() << translation_.x(), translation_.y(), translation_.z();
 		transform.rotate(rotation_);
 		return transform;
