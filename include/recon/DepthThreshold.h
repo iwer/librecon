@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractPointProcessor.h"
 #include <pcl/filters/passthrough.h>
+#include <Eigen/Eigen>
 #include "typedefs.h"
 
 /**

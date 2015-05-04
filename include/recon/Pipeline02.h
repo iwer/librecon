@@ -12,7 +12,6 @@ namespace recon
 		public AbstractProcessingPipeline
 	{
 	public:
-		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		Pipeline02(int inputCloudCount,
 			boost::signals2::signal<void (float)> * minDepUpdate, 
 			boost::signals2::signal<void (float)> * maxDepUpdate, 
