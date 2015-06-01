@@ -13,6 +13,7 @@ namespace recon
 	public:
 		typedef boost::shared_ptr<AbstractSensor> Ptr;
 
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractSensor(void);
 		virtual ~AbstractSensor(void);
 

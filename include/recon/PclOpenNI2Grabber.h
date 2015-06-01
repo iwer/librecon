@@ -10,6 +10,7 @@ namespace recon
 		public AbstractPointCloudGenerator
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		PclOpenNI2Grabber(void);
 		PclOpenNI2Grabber(std::string uri);
 		~PclOpenNI2Grabber(void);

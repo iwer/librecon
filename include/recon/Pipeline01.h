@@ -10,6 +10,7 @@ namespace recon
 		public AbstractProcessingPipeline
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		Pipeline01(boost::signals2::signal<void (float)> * minDepUpdate, 
 			boost::signals2::signal<void (float)> * maxDepUpdate, 
 			boost::signals2::signal<void (float)> * triangleSizeUpdate);
