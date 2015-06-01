@@ -9,6 +9,7 @@ namespace recon
 	class SensorFactory
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		SensorFactory();
 		~SensorFactory();
 		AbstractSensor::Ptr createFilePointCloudGenerator(std::string fileName, std::string backgroundFileName);

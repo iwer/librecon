@@ -44,6 +44,7 @@ namespace recon
 		if(index >= 0 && index < cloudCount_) {
 			return sensors_[index]->getCloudSource()->getOutputCloud();
 		}
+		return boost::make_shared<Cloud const>();
 	}
 
 	TrianglesPtr AbstractProcessingPipeline::getTriangles()

@@ -21,7 +21,7 @@ namespace recon
 			//temp_cloud_.swap(cloud_);
 			temp_cloud_ = cloud_;
 			cloud_mutex_.unlock();
-			std::cout << "Got cloud, has points: " << temp_cloud_->size() << std::endl;
+			//std::cout << "Got cloud, has points: " << temp_cloud_->size() << std::endl;
 		}
 
 		return temp_cloud_;

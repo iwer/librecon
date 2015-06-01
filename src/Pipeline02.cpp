@@ -53,14 +53,21 @@ namespace recon
 				//bgr_.setBackGroundCloud(s->getBackground());
 				//bgr_.processData();
 
-				// Transform using extrinsics
+				auto t = d_.getOutputCloud();
+				combinedCloud += *t;
+
+				/*// Transform using extrinsics
 				CloudPtr cloudT(new Cloud);
-				pcl::transformPointCloud(*d_.getOutputCloud(), *cloudT, s->getDepthExtrinsics()->getTransformation());
+				Eigen::Affine3f transformation = Eigen::Affine3f::Identity();
+				Eigen::Vector4f transl = s->getDepthExtrinsics()->getTranslation();
+				transformation.translation() << transl.x() , transl.y(), transl.z();
+				transformation.rotate(s->getDepthExtrinsics()->getRotation());
+				pcl::transformPointCloud(*d_.getOutputCloud(), *cloudT, transformation);
 
 
 				// Merge into combined cloud
 				combinedCloud += *cloudT;
-
+				*/
 			}
 		}
 
