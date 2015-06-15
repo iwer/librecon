@@ -10,6 +10,7 @@ namespace recon
 		public AbstractSensor
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		explicit OpenNI2Sensor(pcl::io::openni2::OpenNI2DeviceInfo deviceInfo, int deviceId);
 		~OpenNI2Sensor(void);
 		void setBackGroundImpl() override;

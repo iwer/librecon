@@ -37,51 +37,70 @@ namespace recon
 	void Pipeline02::processData()
 	{
 
-		Cloud combinedCloud;
+		auto combinedCloud = Cloud();
 
 		// Single input cloud processing
 		for (auto &s : sensors_)
 		{
 			auto tmpCloud = s->getCloudSource()->getOutputCloud();
 			if(tmpCloud && tmpCloud->size() > 0){
+
 				// Depth threshold
 				d_.setInputCloud(tmpCloud);
 				d_.processData();
+				auto s1 = d_.getOutputCloud();
 
 				// Remove Background
-				//bgr_.setInputCloud(tmpCloud);
+				//bgr_.setInputCloud(s1);
 				//bgr_.setBackGroundCloud(s->getBackground());
 				//bgr_.processData();
+				//auto s2 = bgr_.getOutputCloud();
+				
+				// Normal calculation?
 
-				auto t = d_.getOutputCloud();
-				combinedCloud += *t;
-
-				/*// Transform using extrinsics
-				CloudPtr cloudT(new Cloud);
-				Eigen::Affine3f transformation = Eigen::Affine3f::Identity();
-				Eigen::Vector4f transl = s->getDepthExtrinsics()->getTranslation();
-				transformation.translation() << transl.x() , transl.y(), transl.z();
-				transformation.rotate(s->getDepthExtrinsics()->getRotation());
-				pcl::transformPointCloud(*d_.getOutputCloud(), *cloudT, transformation);
+				// Transform using extrinsics
+				CloudPtr cloudTransformed(new Cloud);
+				auto transformation = Eigen::Affine3f::Identity();
+				auto translation = s->getDepthExtrinsics()->getTranslation();
+				transformation.translation() << translation.x() , translation.y(), translation.z();
+				auto rotation = s->getDepthExtrinsics()->getRotation();
+				// Flip to match global coordinate frame
+				Eigen::AngleAxisf aa(rotation);
+				auto vec = aa.axis();
+				aa.angle();
+				vec.x() = -vec.x();
+				vec.y() = vec.y();
+				vec.z() = -vec.z();
+				aa.axis() = vec;
+				transformation.rotate(rotation);
+				pcl::transformPointCloud(*s1, *cloudTransformed, transformation);
 
 
 				// Merge into combined cloud
-				combinedCloud += *cloudT;
-				*/
+				combinedCloud += *cloudTransformed;
 			}
 		}
 
 		// Combined cloud processing
 		if (combinedCloud.size() > 0)	{
 			// Downsample
-			s_.setInputCloud(boost::make_shared<Cloud>(combinedCloud));
-			s_.processData();
+			//s_.setInputCloud(boost::make_shared<Cloud>(combinedCloud));
+			//s_.processData();
 
-			mp_->setInputCloud(s_.getOutputCloud());
-			//mp_->processData();
-			meshCloud_ = mp_->getInputCloud();
+			auto c1 = s_.getOutputCloud();
+
+			// MLS Smoothing
+			// Greedy Projection
+			if(c1->size() > 0) {
+				//mp_->setInputCloud(s_.getOutputCloud());
+				//mp_->processData();
+			}
+			meshCloud_ = boost::make_shared<Cloud>(combinedCloud);
 			triangles_ = mp_->getTriangles();
-		} 
+		}  else
+		{
+			std::cerr << "Combined Cloud contains no points..." << std::cout;
+		}
 
 	}
 }

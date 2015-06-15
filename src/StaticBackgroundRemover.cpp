@@ -13,9 +13,9 @@ namespace recon
 	void StaticBackgroundRemover::processData() {
 		if(inputCloud_->size() > 0) {
 			sd_.setInputCloud(inputCloud_);
-			sd_.setDistanceThreshold(1);
+			sd_.setDistanceThreshold(.005);
 			sd_.setTargetCloud(backGroundCloud_);
-			sd_.segment(*outputCloud_);
+			sd_.segment(outputCloud_);
 		}
 	}
 
