@@ -21,9 +21,10 @@ namespace recon
 			/** cy */
 			double principal_point_y;
 
+			EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 			CameraParameters (double initValue)
 				: focal_length_x (initValue), focal_length_y (initValue),
-				  principal_point_x (initValue),  principal_point_y (initValue)
+				principal_point_x (initValue),  principal_point_y (initValue)
 			{}
 
 			CameraParameters (double fx, double fy, double cx, double cy)
@@ -61,5 +62,5 @@ namespace recon
 		std::vector<uint8_t> color_resize_buffer_;
 		std::vector<uint16_t> depth_resize_buffer_;
 	};
-	
+
 }

@@ -5,10 +5,10 @@ namespace recon
 	DepthThreshold::DepthThreshold(void):
 		AbstractPointProcessor()
 	{
-		depthThreshMax_ = 1.5;
-		depthThreshMin_ = 0;
+		depthThreshMax_ = 5;
+		depthThreshMin_ = .1;
 		pass_.setFilterFieldName ("z");
-		pass_.setKeepOrganized(true);
+		pass_.setKeepOrganized(false);
 	}
 
 	DepthThreshold::~DepthThreshold(void)
@@ -20,7 +20,7 @@ namespace recon
 		if(inputCloud_->size() > 0) {
 			pass_.setFilterLimits (depthThreshMin_, depthThreshMax_);
 			pass_.setInputCloud(inputCloud_);
-			pass_.filter(*outputCloud_);
+			pass_.filter(outputCloud_);
 		}
 	}
 

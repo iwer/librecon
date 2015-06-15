@@ -7,7 +7,7 @@ namespace recon
 		: public AbstractPointProcessor 
 	{
 	public:
-		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+		//EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		StaticBackgroundRemover();
 		~StaticBackgroundRemover() override;
 
