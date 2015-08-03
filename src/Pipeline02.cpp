@@ -1,5 +1,6 @@
 #include "recon/Pipeline02.h"
 #include <pcl/common/transforms.h>
+#include <pcl/common/time.h>
 
 namespace recon
 {
@@ -36,6 +37,7 @@ namespace recon
 
 	void Pipeline02::processData()
 	{
+		pcl::ScopeTime t1("Processing");
 
 		auto combinedCloud = Cloud();
 
@@ -46,15 +48,15 @@ namespace recon
 			if(tmpCloud && tmpCloud->size() > 0){
 
 				// Depth threshold
-				d_.setInputCloud(tmpCloud);
-				d_.processData();
-				auto s1 = d_.getOutputCloud();
+				//d_.setInputCloud(tmpCloud);
+				//d_.processData();
+				//auto s1 = d_.getOutputCloud();
 
 				// Remove Background
-				//bgr_.setInputCloud(s1);
-				//bgr_.setBackGroundCloud(s->getBackground());
-				//bgr_.processData();
-				//auto s2 = bgr_.getOutputCloud();
+				bgr_.setInputCloud(tmpCloud);
+				bgr_.setBackGroundCloud(s->getBackground());
+				bgr_.processData();
+				auto s2 = bgr_.getOutputCloud();
 				
 				// Normal calculation?
 
@@ -73,7 +75,7 @@ namespace recon
 				vec.z() = -vec.z();
 				aa.axis() = vec;
 				transformation.rotate(rotation);
-				pcl::transformPointCloud(*s1, *cloudTransformed, transformation);
+				pcl::transformPointCloud(*s2, *cloudTransformed, transformation);
 
 
 				// Merge into combined cloud

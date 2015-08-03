@@ -11,7 +11,7 @@ namespace recon
 		
 		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractPointCloudGenerator(void);
-		~AbstractPointCloudGenerator(void);
+		virtual ~AbstractPointCloudGenerator(void);
 
 
 		virtual void aquireFrame() = 0;
