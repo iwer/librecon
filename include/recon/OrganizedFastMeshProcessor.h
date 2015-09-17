@@ -24,7 +24,7 @@ namespace recon
 	private:
 		pcl::OrganizedFastMesh<PointType> ofm_;
 
-		int ofmPixelSize_;
+		int edgeLength_;
 
 
 	}; 

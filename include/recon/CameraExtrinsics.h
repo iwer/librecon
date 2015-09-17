@@ -2,6 +2,7 @@
 #include <Eigen/StdVector>
 #include <Eigen/Geometry>
 #include <boost/smart_ptr/shared_ptr.hpp>
+#include <ostream>
 
 namespace recon
 {
@@ -15,9 +16,12 @@ namespace recon
 		CameraExtrinsics(Eigen::Vector4f &translation, Eigen::Quaternionf &rotation);
 		~CameraExtrinsics(void);
 
-		Eigen::Vector4f getTranslation();
-		Eigen::Quaternionf getRotation();
-		Eigen::Affine3f getTransformation();
+		Eigen::Vector4f * getTranslation();
+		Eigen::Quaternionf * getRotation();
+		Eigen::Affine3f  getTransformation();
+
+
+		friend std::ostream& operator<<(std::ostream& os, const CameraExtrinsics& obj);
 
 	private:
 		Eigen::Vector4f translation_;

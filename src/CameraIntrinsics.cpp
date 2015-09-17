@@ -25,7 +25,6 @@ recon::CameraIntrinsics::CameraIntrinsics(float focalLengthX, float focalLengthY
 	, principalPointX_(principalPointX)
 	, principalPointY_(principalPointY)
 {
-	std::cout << "New Intrinsics: " << focalLengthX << " " << focalLengthY << " " << principalPointX << " " << principalPointY << " " << sensorWidth << " " << sensorHeight << " " << std::endl;
 	hFov_ = std::atan(sensorWidth_ / 2 / focalLengthX_);
 	vFov_ = std::atan(sensorHeight_ / 2 / focalLengthY_);
 }
@@ -68,4 +67,17 @@ float recon::CameraIntrinsics::getHFov() const
 float recon::CameraIntrinsics::getVFov() const
 {
 	return vFov_;
+}
+
+std::ostream& recon::operator<<(std::ostream& os, const CameraIntrinsics& obj)
+{
+	return os
+		<< "focalLengthX_: " << obj.focalLengthX_
+		<< " focalLengthY_: " << obj.focalLengthY_
+		<< " sensorWidth_: " << obj.sensorWidth_
+		<< " sensorHeight_: " << obj.sensorHeight_
+		<< " principalPointX_: " << obj.principalPointX_
+		<< " principalPointY_: " << obj.principalPointY_
+		<< " hFov_: " << obj.hFov_
+		<< " vFov_: " << obj.vFov_;
 }

@@ -21,6 +21,7 @@ namespace recon
 			pass_.setFilterLimits (depthThreshMin_, depthThreshMax_);
 			pass_.setInputCloud(inputCloud_);
 			pass_.filter(outputCloud_);
+			//std::cout << "DepthThresh in: "<< inputCloud_->size() << " out: " << outputCloud_.size() << std::endl;
 		}
 	}
 

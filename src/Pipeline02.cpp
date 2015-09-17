@@ -53,10 +53,10 @@ namespace recon
 				//auto s1 = d_.getOutputCloud();
 
 				// Remove Background
-				bgr_.setInputCloud(tmpCloud);
-				bgr_.setBackGroundCloud(s->getBackground());
-				bgr_.processData();
-				auto s2 = bgr_.getOutputCloud();
+				//bgr_.setInputCloud(tmpCloud);
+				//bgr_.setBackGroundCloud(s->getBackground());
+				//bgr_.processData();
+				//auto s2 = bgr_.getOutputCloud();
 				
 				// Normal calculation?
 
@@ -64,18 +64,18 @@ namespace recon
 				CloudPtr cloudTransformed(new Cloud);
 				auto transformation = Eigen::Affine3f::Identity();
 				auto translation = s->getDepthExtrinsics()->getTranslation();
-				transformation.translation() << translation.x() , translation.y(), translation.z();
+				transformation.translation() << translation->x() , translation->y(), translation->z();
 				auto rotation = s->getDepthExtrinsics()->getRotation();
 				// Flip to match global coordinate frame
-				Eigen::AngleAxisf aa(rotation);
+				Eigen::AngleAxisf aa(*rotation);
 				auto vec = aa.axis();
 				aa.angle();
 				vec.x() = -vec.x();
 				vec.y() = vec.y();
 				vec.z() = -vec.z();
 				aa.axis() = vec;
-				transformation.rotate(rotation);
-				pcl::transformPointCloud(*s2, *cloudTransformed, transformation);
+				transformation.rotate(aa);
+				pcl::transformPointCloud(*tmpCloud, *cloudTransformed, transformation);
 
 
 				// Merge into combined cloud

@@ -20,6 +20,7 @@ namespace recon
 
 		void start() override;
 		void stop() override;
+		bool isRunning();
 
 		CameraIntrinsics::Ptr getDepthIntrinsics();
 
@@ -27,7 +28,7 @@ namespace recon
 		pcl::io::OpenNI2Grabber * grabber_;
 		boost::signals2::connection cloud_connection_;
 
-
+		bool fully_started;
 	}; 
 }
 

@@ -24,7 +24,7 @@ namespace recon
 		}
 	}
 
-	void StaticBackgroundRemover::setBackGroundCloud(CloudConstPtr backGroundCloud) {
+	void StaticBackgroundRemover::setBackGroundCloud(CloudConstPtr &backGroundCloud) {
 		backGroundCloud_.swap(backGroundCloud);
 	}
 

@@ -19,14 +19,14 @@ namespace recon
 	{
 	}
 
-	Eigen::Vector4f CameraExtrinsics::getTranslation()
+	Eigen::Vector4f * CameraExtrinsics::getTranslation()
 	{
-		return translation_;
+		return &translation_;
 	}
 
-	Eigen::Quaternionf CameraExtrinsics::getRotation()
+	Eigen::Quaternionf * CameraExtrinsics::getRotation()
 	{
-		return rotation_;
+		return &rotation_;
 	}
 
 		Eigen::Affine3f CameraExtrinsics::getTransformation()
@@ -35,5 +35,12 @@ namespace recon
 		transform.translation() << translation_.x(), translation_.y(), translation_.z();
 		transform.rotate(rotation_);
 		return transform;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const CameraExtrinsics& obj)
+	{
+		return os
+			<< "translation_: " << std::endl << obj.translation_ << std::endl
+			<< " rotation_: " << std::endl << obj.rotation_.matrix();
 	}
 }
