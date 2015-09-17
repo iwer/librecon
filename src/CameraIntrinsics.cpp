@@ -69,6 +69,11 @@ float recon::CameraIntrinsics::getVFov() const
 	return vFov_;
 }
 
+double recon::CameraIntrinsics::getAspectRatio()
+{
+	return static_cast<double>(sensorWidth_) / sensorHeight_;
+}
+
 std::ostream& recon::operator<<(std::ostream& os, const CameraIntrinsics& obj)
 {
 	return os

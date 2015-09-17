@@ -33,7 +33,7 @@ namespace recon
 		if(image_mutex_.try_lock())
 		{
 			tmp_image = image_;
-			cloud_mutex_.unlock();
+			image_mutex_.unlock();
 		}
 		return tmp_image;
 	}

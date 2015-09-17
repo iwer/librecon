@@ -25,7 +25,7 @@ namespace recon
 		float getVFov() const;
 
 		friend std::ostream& operator<<(std::ostream& os, const CameraIntrinsics& obj);
-
+		double getAspectRatio();
 	private:
 		float focalLengthX_;
 		float focalLengthY_;
