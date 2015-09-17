@@ -65,6 +65,9 @@ namespace recon
 
 				meshCloud_ = cloudTransformed;
 				triangles_ = mp_->getTriangles();
+
+				
+				
 			}		
 		}
 	}

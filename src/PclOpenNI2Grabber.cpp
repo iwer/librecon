@@ -8,14 +8,14 @@ namespace recon
 		: AbstractPointCloudGenerator()
 		, fully_started(false)
 	{
-		grabber_ =  new pcl::io::OpenNI2Grabber("", pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode);
+		grabber_ =  new pcl::io::OpenNI2Grabber("", pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_VGA_30Hz);
 	}
 
 	PclOpenNI2Grabber::PclOpenNI2Grabber(std::string uri)
 		: AbstractPointCloudGenerator()
 		, fully_started(false)
 	{
-		grabber_ =  new pcl::io::OpenNI2Grabber(uri, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode);
+		grabber_ =  new pcl::io::OpenNI2Grabber(uri, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_VGA_30Hz);
 	}
 
 	PclOpenNI2Grabber::~PclOpenNI2Grabber(void)
@@ -64,6 +64,7 @@ namespace recon
 	{
 		grabber_->stop();
 		cloud_connection_.disconnect();
+		image_connection_.disconnect();
 		std::cout << "Grabber " << this << " stopped" << std::endl;
 	}
 
@@ -84,6 +85,7 @@ namespace recon
 	void PclOpenNI2Grabber::image_callback(const boost::shared_ptr<pcl::io::Image>& newImage)
 	{
 		boost::mutex::scoped_lock lock(image_mutex_);
+		//std::cout << "Got " << newImage->getDataSize() << " bytes of image data" << std::endl;
 		image_ = newImage;
 	}
 }
