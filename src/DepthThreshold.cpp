@@ -8,7 +8,7 @@ namespace recon
 		depthThreshMax_ = 5;
 		depthThreshMin_ = .1;
 		pass_.setFilterFieldName ("z");
-		pass_.setKeepOrganized(false);
+		pass_.setKeepOrganized(true);
 	}
 
 	DepthThreshold::~DepthThreshold(void)
