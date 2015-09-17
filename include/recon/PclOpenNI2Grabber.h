@@ -17,6 +17,8 @@ namespace recon
 
 		void aquireFrame() override;
 		void cloud_callback (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr& cloud);
+		void image_callback(const boost::shared_ptr<pcl::io::Image>& image);
+
 
 		void start() override;
 		void stop() override;
@@ -27,6 +29,7 @@ namespace recon
 	private:
 		pcl::io::OpenNI2Grabber * grabber_;
 		boost::signals2::connection cloud_connection_;
+		boost::signals2::connection image_connection_;
 
 		bool fully_started;
 	}; 

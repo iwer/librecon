@@ -34,6 +34,10 @@ namespace recon
 		// connect cloud callback to openni grabber
 		boost::function<void (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr&) > cloud_cb = boost::bind (&PclOpenNI2Grabber::cloud_callback, this, _1);
 		cloud_connection_ = grabber_->registerCallback (cloud_cb);
+		
+		boost::function<void (const boost::shared_ptr<pcl::io::Image>&)> image_cb = boost::bind (&PclOpenNI2Grabber::image_callback, this, _1);
+		image_connection_ = grabber_->registerCallback(image_cb);
+
 		std::cout << "Grabber " << this << " started. " << std::endl;
 	}
 
@@ -77,6 +81,8 @@ namespace recon
 		cloud_ = alphaRemovedCloud.makeShared();
 	}
 
-
-
+	void PclOpenNI2Grabber::image_callback(const boost::shared_ptr<pcl::io::Image>&)
+	{
+		std::cout << "Got image" << std::endl;
+	}
 }
