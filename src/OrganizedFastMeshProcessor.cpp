@@ -21,7 +21,7 @@ namespace recon
 			ofm_.setTrianglePixelSize (edgeLength_);
 			ofm_.setInputCloud(inputCloud_);
 			ofm_.reconstruct (*triangles_);
-			//std::cout << "Reconstructed triangles: " << triangles_->size() << std::endl;
+			//std::cout << "Reconstructed triangles: " << triangles_->size() << " from " << inputCloud_->size() << " points" << std::endl;
 
 		}
 	}

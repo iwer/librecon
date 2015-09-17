@@ -61,7 +61,7 @@ namespace recon
 				aa.axis() = axis;
 				
 				transformation.rotate(aa);
-				pcl::transformPointCloud(*pp_->getOutputCloud(), *cloudTransformed, transformation);
+				pcl::transformPointCloud(*mp_->getInputCloud(), *cloudTransformed, transformation);
 
 				meshCloud_ = cloudTransformed;
 				triangles_ = mp_->getTriangles();
