@@ -30,7 +30,7 @@ namespace recon
 	void AbstractProcessingPipeline::setSensor(AbstractSensor::Ptr sensor, int index)
 	{
 		if(index < cloudCount_){
-			sensors_[index].swap(sensor);
+			sensors_[index] = sensor;
 		}
 	}
 

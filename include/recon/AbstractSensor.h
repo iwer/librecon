@@ -20,13 +20,13 @@ namespace recon
 		CloudConstPtr getBackground() const;
 		void setBackground(void);
 		CameraIntrinsics::Ptr getDepthIntrinsics() const;
-		void setDepthIntrinsics(const CameraIntrinsics::Ptr& depthIntrinsics);
+		void setDepthIntrinsics(const CameraIntrinsics::Ptr depthIntrinsics);
 		CameraExtrinsics::Ptr getDepthExtrinsics() const;
-		void setDepthExtrinsics(const CameraExtrinsics::Ptr& depthExtrinsics);
+		void setDepthExtrinsics(const CameraExtrinsics::Ptr depthExtrinsics);
 		CameraIntrinsics::Ptr getRgbIntrinsics() const;
-		void setRgbIntrinsics(const CameraIntrinsics::Ptr& rgbIntrinsics);
+		void setRgbIntrinsics(const CameraIntrinsics::Ptr rgbIntrinsics);
 		CameraExtrinsics::Ptr getRgbExtrinsics() const;
-		void setRgbExtrinsics(const CameraExtrinsics::Ptr& rgbExtrinsics);
+		void setRgbExtrinsics(const CameraExtrinsics::Ptr rgbExtrinsics);
 
 		AbstractPointCloudGenerator* getCloudSource() const;
 

@@ -4,8 +4,8 @@
 namespace recon
 {
 	AbstractSensor::AbstractSensor(void)
-		: depthIntrinsics_()
-		, depthExtrinsics_()
+		: depthIntrinsics_(new CameraIntrinsics())
+		, depthExtrinsics_(new CameraExtrinsics())
 		, rgbIntrinsics_()
 		, rgbExtrinsics_()
 	{
@@ -31,7 +31,7 @@ namespace recon
 		return depthIntrinsics_;
 	}
 
-	void AbstractSensor::setDepthIntrinsics(const CameraIntrinsics::Ptr& depthIntrinsics)
+	void AbstractSensor::setDepthIntrinsics(const CameraIntrinsics::Ptr depthIntrinsics)
 	{
 		depthIntrinsics_ = depthIntrinsics;
 	}
@@ -41,9 +41,10 @@ namespace recon
 		return depthExtrinsics_;
 	}
 
-	void AbstractSensor::setDepthExtrinsics(const CameraExtrinsics::Ptr& depthExtrinsics)
+	void AbstractSensor::setDepthExtrinsics(const CameraExtrinsics::Ptr depthExtrinsics)
 	{
 		depthExtrinsics_ = depthExtrinsics;
+		std::cout << "Depth Extrinsics updated" << std::endl << *depthExtrinsics << std::endl;
 	}
 
 	CameraIntrinsics::Ptr AbstractSensor::getRgbIntrinsics() const
@@ -51,7 +52,7 @@ namespace recon
 		return rgbIntrinsics_;
 	}
 
-	void AbstractSensor::setRgbIntrinsics(const CameraIntrinsics::Ptr& rgbIntrinsics)
+	void AbstractSensor::setRgbIntrinsics(const CameraIntrinsics::Ptr rgbIntrinsics)
 	{
 		rgbIntrinsics_ = rgbIntrinsics;
 	}
@@ -61,7 +62,7 @@ namespace recon
 		return rgbExtrinsics_;
 	}
 
-	void AbstractSensor::setRgbExtrinsics(const CameraExtrinsics::Ptr& rgbExtrinsics)
+	void AbstractSensor::setRgbExtrinsics(const CameraExtrinsics::Ptr rgbExtrinsics)
 	{
 		rgbExtrinsics_ = rgbExtrinsics;
 	}

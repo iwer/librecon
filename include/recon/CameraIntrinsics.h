@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <boost/smart_ptr/shared_ptr.hpp>
+#include <ostream>
 
 namespace recon
 {
@@ -22,6 +23,8 @@ namespace recon
 		float getPrincipalPointY() const;
 		float getHFov() const;
 		float getVFov() const;
+
+		friend std::ostream& operator<<(std::ostream& os, const CameraIntrinsics& obj);
 
 	private:
 		float focalLengthX_;

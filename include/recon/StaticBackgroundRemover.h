@@ -12,7 +12,7 @@ namespace recon
 		virtual ~StaticBackgroundRemover();
 
 		void processData() override;
-		void setBackGroundCloud(CloudConstPtr backGroundCloud);
+		void setBackGroundCloud(CloudConstPtr &backGroundCloud);
 	private:
 		CloudConstPtr backGroundCloud_;
 		pcl::SegmentDifferences<PointType> sd_;

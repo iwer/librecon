@@ -12,7 +12,7 @@ namespace recon
 	public:
 		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractProcessingPipeline(int cloudCount);
-		~AbstractProcessingPipeline(void);
+		virtual ~AbstractProcessingPipeline(void);
 
 		void setInputCloud(CloudConstPtr cloud, int cloudIndex);
 		void setSensor(AbstractSensor::Ptr sensor, int index);
