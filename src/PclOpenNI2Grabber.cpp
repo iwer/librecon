@@ -81,8 +81,9 @@ namespace recon
 		cloud_ = alphaRemovedCloud.makeShared();
 	}
 
-	void PclOpenNI2Grabber::image_callback(const boost::shared_ptr<pcl::io::Image>&)
+	void PclOpenNI2Grabber::image_callback(const boost::shared_ptr<pcl::io::Image>& newImage)
 	{
-		std::cout << "Got image" << std::endl;
+		boost::mutex::scoped_lock lock(image_mutex_);
+		image_ = newImage;
 	}
 }
