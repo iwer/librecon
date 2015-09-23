@@ -21,11 +21,22 @@ namespace recon
 			//temp_cloud_.swap(cloud_);
 			temp_cloud_ = cloud_;
 			cloud_mutex_.unlock();
-			std::cout << "Got cloud, has points: " << temp_cloud_->size() << std::endl;
+			//std::cout << "Got cloud, has points: " << temp_cloud_->size() << std::endl;
 		}
 
 		return temp_cloud_;
-	} 
+	}
+
+	ImagePtr AbstractPointCloudGenerator::getOutputImage()
+	{
+		ImagePtr tmp_image;
+		if(image_mutex_.try_lock())
+		{
+			tmp_image = image_;
+			image_mutex_.unlock();
+		}
+		return tmp_image;
+	}
 }
 
 

@@ -1,4 +1,7 @@
 #include "recon/Pipeline01.h"
+#include <pcl/common/transforms.h>
+#include <recon/Frame.h>
+
 namespace recon
 {
 
@@ -30,11 +33,85 @@ namespace recon
 
 	void Pipeline01::processData()
 	{
-		pp_->setInputCloud(sensors_[0]->getCloudSource()->getOutputCloud());
-		pp_->processData();
-		mp_->setInputCloud(pp_->getOutputCloud());
-		mp_->processData();
-		meshCloud_ = mp_->getInputCloud();
-		triangles_ = mp_->getTriangles();
+		for(auto &s : sensors_) 
+		{
+			auto tmpCloud = s->getCloudSource()->getOutputCloud();
+			if(tmpCloud && tmpCloud->size() > 0){
+				pp_->setInputCloud(tmpCloud);
+				pp_->processData();
 
-	}}
+				mp_->setInputCloud(pp_->getOutputCloud());
+				mp_->processData();
+
+
+				// Transform using extrinsics
+				CloudPtr cloudTransformed(new Cloud);
+				auto transformation = Eigen::Affine3f::Identity();
+				auto translation = s->getDepthExtrinsics()->getTranslation();
+				transformation.translation() << -translation->x() , translation->y(), -translation->z();
+
+				auto rotation = s->getDepthExtrinsics()->getRotation();
+
+				// Flip to match global coordinate frame
+				Eigen::AngleAxisf aa(*rotation);
+				auto axis = aa.axis();
+				aa.angle();
+				axis.x() = -axis.x();
+				axis.y() = axis.y();
+				axis.z() = -axis.z();
+				aa.axis() = axis;
+
+				transformation.rotate(aa);
+				pcl::transformPointCloud(*mp_->getInputCloud(), *cloudTransformed, transformation);
+
+				meshCloud_ = cloudTransformed;
+				triangles_ = mp_->getTriangles();
+			}		
+		}
+	}
+
+	void Pipeline01::processData(Frame::Ptr frame)
+	{
+		for(int i = 0; i < frame->sensorCount(); i++)
+		{
+			auto tmpCloud = frame->getInputCloud(i);
+			if(tmpCloud && tmpCloud->size() > 0){
+				pp_->setInputCloud(tmpCloud);
+				pp_->processData();
+
+				mp_->setInputCloud(pp_->getOutputCloud());
+				mp_->processData();
+
+
+				// Transform using extrinsics
+				CloudPtr cloudTransformed(new Cloud);
+				auto transformation = Eigen::Affine3f::Identity();
+				auto translation = frame->getInputExtrinsics(i)->getTranslation();
+				transformation.translation() << translation->x() , -translation->z(), translation->y();
+
+				auto rotation = frame->getInputExtrinsics(i)->getRotation();
+
+				// Flip to match global coordinate frame
+				Eigen::AngleAxisf angleAxisRotation(*rotation);
+				auto axis = angleAxisRotation.axis();
+				auto rx = axis.x();
+				auto ry = axis.y();
+				auto rz = axis.z();
+				axis.x() = rx;
+				axis.y() = -rz;
+				axis.z() = ry;
+				
+				angleAxisRotation.axis() = axis;
+
+				transformation.rotate(angleAxisRotation);
+				pcl::transformPointCloud(*mp_->getInputCloud(), *cloudTransformed, transformation);
+
+				meshCloud_ = cloudTransformed;
+				triangles_ = mp_->getTriangles();
+
+				frame->setOutputCloud(cloudTransformed, i);
+				frame->setOutputTriangles(triangles_, i);
+			}
+		}
+	}
+}

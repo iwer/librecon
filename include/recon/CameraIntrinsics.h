@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <boost/smart_ptr/shared_ptr.hpp>
+#include <ostream>
 
 namespace recon
 {
@@ -9,6 +10,7 @@ namespace recon
 	public:
 		typedef boost::shared_ptr<CameraIntrinsics> Ptr;
 
+//		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		CameraIntrinsics();
 		CameraIntrinsics(float focalLength, int sensorWidth, int sensorHeight);
 		CameraIntrinsics(float focalLengthX, float focalLengthY, float principalPointX, float principalPointY, int sensorWidth, int sensorHeight);
@@ -21,8 +23,14 @@ namespace recon
 		float getPrincipalPointY() const;
 		float getHFov() const;
 		float getVFov() const;
+		double getAspectRatio();
+		void setFocalLength(float f);
+
+		friend std::ostream& operator<<(std::ostream& os, const CameraIntrinsics& obj);
 
 	private:
+		void updateFov();
+
 		float focalLengthX_;
 		float focalLengthY_;
 

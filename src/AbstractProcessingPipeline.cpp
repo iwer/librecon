@@ -20,30 +20,16 @@ namespace recon
 	{
 	}
 
-	void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud, int cloudIndex)
-	{
-		//if(cloudIndex<cloudCount_){
-		//	clouds_[cloudIndex].swap(cloud);
-		//}
-	}
-
 	void AbstractProcessingPipeline::setSensor(AbstractSensor::Ptr sensor, int index)
 	{
 		if(index < cloudCount_){
-			sensors_[index].swap(sensor);
+			sensors_[index] = sensor;
 		}
 	}
 
 	CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
 	{
 		return meshCloud_;
-	}
-
-	CloudConstPtr AbstractProcessingPipeline::getInputCloud(int index)
-	{
-		if(index >= 0 && index < cloudCount_) {
-			return sensors_[index]->getCloudSource()->getOutputCloud();
-		}
 	}
 
 	TrianglesPtr AbstractProcessingPipeline::getTriangles()

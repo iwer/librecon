@@ -9,6 +9,7 @@ namespace recon
 		public AbstractSensor
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		SimulatedOpenNI2Sensor(std::string fileName, std::string backgroundFilename);
 		~SimulatedOpenNI2Sensor(void);
 
