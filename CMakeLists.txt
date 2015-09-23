@@ -18,6 +18,8 @@ SET (APPLICATION_VENDOR_NAME "Interactive Immersive Environments")
 SET (APPLICATION_VENDOR_URL "i2e.informatik.haw-hamburg.de")
 SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
 
+add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT ) #-H )
+
 
 #
 # Debugging Options
@@ -48,10 +50,6 @@ SET(Boost_USE_STATIC_LIBS   ON)
 FIND_PACKAGE (Boost 1.55 COMPONENTS "date_time" "filesystem" "graph" "iostreams" "program_options" "regex" "serialization" "signals" "system" "thread" "wserialization" REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-
-#FIND_PACKAGE (Log4Cxx REQUIRED)
-#INCLUDE_DIRECTORIES(${Log4Cxx_INCLUDE_DIRS})
-#LINK_DIRECTORIES(${Log4Cxx_LIBRARY_DIRS})
 
 FIND_PACKAGE (UnitTestPlusPlus REQUIRED)
 INCLUDE_DIRECTORIES(${UnitTestPlusPlus_INCLUDE_DIRS})

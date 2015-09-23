@@ -4,21 +4,33 @@
 #include "GreedyProjectionMeshProcessor.h"
 #include <boost/signals2.hpp>
 #include "PointCloudSampler.h"
+#include "StaticBackgroundRemover.h"
 
-class Pipeline02 :
-	public AbstractProcessingPipeline
+namespace recon
 {
-public:
-	Pipeline02(boost::signals2::signal<void (float)> * minDepUpdate, 
-		boost::signals2::signal<void (float)> * maxDepUpdate, 
-		boost::signals2::signal<void (float)> * triangleSizeUpdate);
-	~Pipeline02(void);
+	class Pipeline02 :
+		public AbstractProcessingPipeline
+	{
+	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+		Pipeline02(int inputCloudCount,
+			boost::signals2::signal<void (float)> * minDepUpdate, 
+			boost::signals2::signal<void (float)> * maxDepUpdate, 
+			boost::signals2::signal<void (float)> * triangleSizeUpdate,
+			boost::signals2::signal<void (int)> * normalKNeighbourUpdate,
+			boost::signals2::signal<void (float)> * muUpdate,
+			boost::signals2::signal<void (int)> * maxNearestNeighboursUpdate,
+			boost::signals2::signal<void (float)> * updateSampleResolution);
+		~Pipeline02(void);
 
-	void processData();
+		void processData() override;
+		void processData(Frame::Ptr frame) override;
 
-private:
-	DepthThreshold d;
-	PointCloudSampler s;
-	GreedyProjectionMeshProcessor g;
-};
+	private:
+		DepthThreshold d_;
+		StaticBackgroundRemover bgr_;
+		PointCloudSampler s_;
+		GreedyProjectionMeshProcessor g_;
+	}; 
+}
 

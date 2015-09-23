@@ -1,8 +1,13 @@
 #include "AbstractPointProcessor.h"
 
-class PointCloudSmoother : AbstractPointProcessor {
+namespace recon
+{
+	class PointCloudSmoother : AbstractPointProcessor {
 
 
-public:
-	void processData() override;
-};
+	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+		void processData() override;
+	};
+
+}

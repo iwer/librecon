@@ -1,29 +1,40 @@
 #include "recon/AbstractProcessingPipeline.h"
+#include "recon/DummySensor.h"
 
 
-AbstractProcessingPipeline::AbstractProcessingPipeline(void) 
-	: cloud_(new Cloud)
-	, meshCloud_(new Cloud)
-	, triangles_(new std::vector<pcl::Vertices>)
+namespace recon
 {
-}
+	AbstractProcessingPipeline::AbstractProcessingPipeline(int cloudCount) 
+		: cloudCount_(cloudCount)
+		, meshCloud_(new Cloud)
+		, triangles_(new std::vector<pcl::Vertices>)
+	{
+		for(auto i = 0; i < cloudCount_; i++) 
+		{
+			sensors_.push_back(boost::make_shared<DummySensor>(DummySensor()));
+		}
+	}
 
 
-AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
-{
-}
+	AbstractProcessingPipeline::~AbstractProcessingPipeline(void)
+	{
+	}
 
-void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud){
-	cloud_ = nullptr;
-	cloud_ = cloud;
-}
+	void AbstractProcessingPipeline::setSensor(AbstractSensor::Ptr sensor, int index)
+	{
+		if(index < cloudCount_){
+			sensors_[index] = sensor;
+		}
+	}
 
-CloudConstPtr AbstractProcessingPipeline::getInputCloud()
-{
-	return meshCloud_;
-}
+	CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
+	{
+		return meshCloud_;
+	}
 
-TrianglesPtr AbstractProcessingPipeline::getTriangles()
-{
-	return triangles_;
+	TrianglesPtr AbstractProcessingPipeline::getTriangles()
+	{
+		return triangles_;
+	}
+
 }

@@ -1,16 +1,31 @@
 #include "recon/StaticBackgroundRemover.h"
+#include <pcl/common/time.h>
 
-void StaticBackgroundRemover::processData() {
-	// TODO - implement StaticBackgroundRemover::processData
-	throw "Not yet implemented";
-}
+namespace recon
+{
+	StaticBackgroundRemover::StaticBackgroundRemover()
+		: AbstractPointProcessor()
+		, tree_(new pcl::search::KdTree<PointType>)
+	{
+	}
 
-void StaticBackgroundRemover::getBackGroundCloud() {
-	// TODO - implement StaticBackgroundRemover::getBackGroundCloud
-	throw "Not yet implemented";
-}
+	StaticBackgroundRemover::~StaticBackgroundRemover()
+	{
+	}
 
-void StaticBackgroundRemover::setBackGroundCloud(CloudConstPtr backGroundCloud) {
-	// TODO - implement StaticBackgroundRemover::setBackGroundCloud
-	throw "Not yet implemented";
+	void StaticBackgroundRemover::processData() {
+		pcl::ScopeTime t1("Background removal");
+		if(inputCloud_->size() > 0) {
+			sd_.setInputCloud(inputCloud_);
+			sd_.setDistanceThreshold(.002);
+			sd_.setSearchMethod(tree_);
+			sd_.setTargetCloud(backGroundCloud_);
+			sd_.segment(outputCloud_);
+		}
+	}
+
+	void StaticBackgroundRemover::setBackGroundCloud(CloudConstPtr &backGroundCloud) {
+		backGroundCloud_.swap(backGroundCloud);
+	}
+
 }
