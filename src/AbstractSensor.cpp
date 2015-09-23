@@ -4,13 +4,22 @@
 namespace recon
 {
 	AbstractSensor::AbstractSensor(void)
-		: depthIntrinsics_(new CameraIntrinsics())
+		: sensorId_(0)
+		, depthIntrinsics_(new CameraIntrinsics())
 		, depthExtrinsics_(new CameraExtrinsics())
 		, rgbIntrinsics_()
 		, rgbExtrinsics_()
 	{
 	}
 
+	AbstractSensor::AbstractSensor(int id)
+		: sensorId_(id)
+		, depthIntrinsics_(new CameraIntrinsics())
+		, depthExtrinsics_(new CameraExtrinsics())
+		, rgbIntrinsics_()
+		, rgbExtrinsics_()
+	{
+	}
 
 	AbstractSensor::~AbstractSensor(void)
 	{
@@ -70,5 +79,10 @@ namespace recon
 	AbstractPointCloudGenerator* AbstractSensor::getCloudSource() const
 	{
 		return cloudSource_;
+	}
+
+	int AbstractSensor::getId() const
+	{
+		return sensorId_;
 	}
 }

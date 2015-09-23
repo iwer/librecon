@@ -4,7 +4,7 @@
 namespace recon
 {
 	OpenNI2Sensor::OpenNI2Sensor(pcl::io::openni2::OpenNI2DeviceInfo &deviceInfo, int deviceId)
-		: AbstractSensor()
+		: AbstractSensor(deviceId)
 		, grabber_(new PclOpenNI2Grabber("#" + std::to_string(deviceId + 1)))
 
 	{

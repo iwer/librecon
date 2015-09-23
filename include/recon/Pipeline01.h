@@ -17,6 +17,7 @@ namespace recon
 		~Pipeline01(void);
 
 		void processData() override;
+		void processData(Frame::Ptr frame) override;
 		void updateTriangleSize(float size);
 		DepthThreshold d_;
 		OrganizedFastMeshProcessor m_;
