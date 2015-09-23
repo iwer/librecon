@@ -87,20 +87,23 @@ namespace recon
 				CloudPtr cloudTransformed(new Cloud);
 				auto transformation = Eigen::Affine3f::Identity();
 				auto translation = frame->getInputExtrinsics(i)->getTranslation();
-				transformation.translation() << -translation->x() , translation->y(), -translation->z();
+				transformation.translation() << translation->x() , -translation->z(), translation->y();
 
 				auto rotation = frame->getInputExtrinsics(i)->getRotation();
 
 				// Flip to match global coordinate frame
-				//Eigen::AngleAxisf aa(*rotation);
-				//auto axis = aa.axis();
-				//aa.angle();
-				//axis.x() = -axis.x();
-				//axis.y() = axis.y();
-				//axis.z() = -axis.z();
-				//aa.axis() = axis;
+				Eigen::AngleAxisf angleAxisRotation(*rotation);
+				auto axis = angleAxisRotation.axis();
+				auto rx = axis.x();
+				auto ry = axis.y();
+				auto rz = axis.z();
+				axis.x() = rx;
+				axis.y() = -rz;
+				axis.z() = ry;
+				
+				angleAxisRotation.axis() = axis;
 
-				transformation.rotate(*rotation);
+				transformation.rotate(angleAxisRotation);
 				pcl::transformPointCloud(*mp_->getInputCloud(), *cloudTransformed, transformation);
 
 				meshCloud_ = cloudTransformed;
