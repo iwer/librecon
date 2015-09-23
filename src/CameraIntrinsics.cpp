@@ -5,16 +5,21 @@ recon::CameraIntrinsics::CameraIntrinsics()
 {
 }
 
+void recon::CameraIntrinsics::updateFov()
+{
+	hFov_ = 2 * std::atan(static_cast<float>(sensorWidth_) / 2 / focalLengthX_);
+	vFov_ = 2 * std::atan(static_cast<float>(sensorHeight_) / 2 / focalLengthY_);
+}
+
 recon::CameraIntrinsics::CameraIntrinsics(float focalLength, int sensorWidth, int sensorHeight)
 	: focalLengthX_(focalLength)
 	, focalLengthY_(focalLength)
 	, sensorWidth_(sensorWidth)
 	, sensorHeight_(sensorHeight)
-	, principalPointX_(.5)
-	, principalPointY_(.5)
+	, principalPointX_(.5f*sensorWidth)
+	, principalPointY_(.5f*sensorHeight)
 {
-	hFov_ = std::atan(sensorWidth_ / 2 / focalLengthX_);
-	vFov_ = std::atan(sensorHeight_ / 2 / focalLengthY_);
+	updateFov();
 }
 
 recon::CameraIntrinsics::CameraIntrinsics(float focalLengthX, float focalLengthY, float principalPointX, float principalPointY, int sensorWidth, int sensorHeight)
@@ -25,8 +30,7 @@ recon::CameraIntrinsics::CameraIntrinsics(float focalLengthX, float focalLengthY
 	, principalPointX_(principalPointX)
 	, principalPointY_(principalPointY)
 {
-	hFov_ = std::atan(sensorWidth_ / 2 / focalLengthX_);
-	vFov_ = std::atan(sensorHeight_ / 2 / focalLengthY_);
+	updateFov();
 }
 
 float recon::CameraIntrinsics::getFocalLengthX() const
@@ -71,7 +75,14 @@ float recon::CameraIntrinsics::getVFov() const
 
 double recon::CameraIntrinsics::getAspectRatio()
 {
-	return static_cast<double>(sensorWidth_) / sensorHeight_;
+	return static_cast<double>(sensorWidth_) / static_cast<double>(sensorHeight_);
+}
+
+void recon::CameraIntrinsics::setFocalLength(float f)
+{
+	focalLengthX_ = f;
+	focalLengthY_ = f;
+	updateFov();
 }
 
 std::ostream& recon::operator<<(std::ostream& os, const CameraIntrinsics& obj)
@@ -84,5 +95,6 @@ std::ostream& recon::operator<<(std::ostream& os, const CameraIntrinsics& obj)
 		<< " principalPointX_: " << obj.principalPointX_
 		<< " principalPointY_: " << obj.principalPointY_
 		<< " hFov_: " << obj.hFov_
-		<< " vFov_: " << obj.vFov_;
+		<< " vFov_: " << obj.vFov_
+		<< " getAspectRatio(): " << static_cast<double>(obj.sensorWidth_) / static_cast<double>(obj.sensorHeight_);
 }

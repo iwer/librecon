@@ -23,10 +23,14 @@ namespace recon
 		float getPrincipalPointY() const;
 		float getHFov() const;
 		float getVFov() const;
+		double getAspectRatio();
+		void setFocalLength(float f);
 
 		friend std::ostream& operator<<(std::ostream& os, const CameraIntrinsics& obj);
-		double getAspectRatio();
+
 	private:
+		void updateFov();
+
 		float focalLengthX_;
 		float focalLengthY_;
 
