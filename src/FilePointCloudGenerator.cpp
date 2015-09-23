@@ -44,7 +44,7 @@ namespace recon
 			extrinsics_ = boost::make_shared<CameraExtrinsics>(CameraExtrinsics(cloud.sensor_origin_, cloud.sensor_orientation_));
 			{
 				boost::mutex::scoped_lock(cloud_mutex_);
-				cloud_ = boost::make_shared<Cloud>(cloud);		
+				cloud_ = boost::make_shared<Cloud>(cloud);
 			}
 			std::cout << "Loaded " << cloud_->size() << " points from '" << filename_ << "'" << std::endl;
 		}

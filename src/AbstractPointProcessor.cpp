@@ -1,11 +1,12 @@
 #include "recon/AbstractPointProcessor.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 
 namespace recon
 {
 	AbstractPointProcessor::AbstractPointProcessor(void) :
 		inputCloud_(new Cloud),
-		outputCloud_(new Cloud)
+		outputCloud_()
 	{
 	}
 
@@ -21,6 +22,6 @@ namespace recon
 
 	CloudPtr AbstractPointProcessor::getOutputCloud()
 	{
-		return outputCloud_;
+		return outputCloud_.makeShared();//boost::make_shared<Cloud>(outputCloud_);
 	} 
 }

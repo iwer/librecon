@@ -13,25 +13,30 @@ namespace recon
 	public:
 		typedef boost::shared_ptr<AbstractSensor> Ptr;
 
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractSensor(void);
+		AbstractSensor(int id);
 		virtual ~AbstractSensor(void);
 
 		CloudConstPtr getBackground() const;
 		void setBackground(void);
 		CameraIntrinsics::Ptr getDepthIntrinsics() const;
-		void setDepthIntrinsics(const CameraIntrinsics::Ptr& depthIntrinsics);
+		void setDepthIntrinsics(const CameraIntrinsics::Ptr depthIntrinsics);
 		CameraExtrinsics::Ptr getDepthExtrinsics() const;
-		void setDepthExtrinsics(const CameraExtrinsics::Ptr& depthExtrinsics);
+		void setDepthExtrinsics(const CameraExtrinsics::Ptr depthExtrinsics);
 		CameraIntrinsics::Ptr getRgbIntrinsics() const;
-		void setRgbIntrinsics(const CameraIntrinsics::Ptr& rgbIntrinsics);
+		void setRgbIntrinsics(const CameraIntrinsics::Ptr rgbIntrinsics);
 		CameraExtrinsics::Ptr getRgbExtrinsics() const;
-		void setRgbExtrinsics(const CameraExtrinsics::Ptr& rgbExtrinsics);
+		void setRgbExtrinsics(const CameraExtrinsics::Ptr rgbExtrinsics);
 
+		int getId() const;
 		AbstractPointCloudGenerator* getCloudSource() const;
 
 	protected:
 		virtual void setBackGroundImpl(void) = 0;
 
+
+		int sensorId_;
 		CloudConstPtr background_;
 		CameraIntrinsics::Ptr depthIntrinsics_;
 		CameraExtrinsics::Ptr depthExtrinsics_;

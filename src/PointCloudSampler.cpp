@@ -5,7 +5,7 @@ namespace recon
 	PointCloudSampler::PointCloudSampler() 
 		: AbstractPointProcessor()
 	{
-		resolution_ = .1; // 10 cm
+		resolution_ = .01; // 1 cm
 	}
 
 	PointCloudSampler::~PointCloudSampler()
@@ -18,9 +18,9 @@ namespace recon
 			vg_.setDownsampleAllData(true);
 			vg_.setLeafSize(resolution_, resolution_, resolution_);
 			vg_.setInputCloud(inputCloud_);
-			vg_.filter(*outputCloud_);
+			vg_.filter(outputCloud_);
 		}
-		//std::cout << "Sampler: " << inputCloud_->size() << " : " << outputCloud_->size() << std::endl;
+		std::cout << "Sampler: " << inputCloud_->size() << " : " << outputCloud_.size() << std::endl;
 	}
 
 	float PointCloudSampler::getResolution() const

@@ -7,6 +7,7 @@ namespace recon
 	class AbstractPointProcessor
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractPointProcessor(void);
 		virtual ~AbstractPointProcessor(void);
 
@@ -16,7 +17,7 @@ namespace recon
 
 	protected:
 		CloudConstPtr inputCloud_;
-		CloudPtr outputCloud_;
+		Cloud outputCloud_;
 	};
 }
 

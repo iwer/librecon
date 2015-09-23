@@ -44,24 +44,28 @@ namespace recon
 		}
 	}
 
-	void SensorFactory::checkConnectedDevices()
+	int SensorFactory::checkConnectedDevices(bool output)
 	{
 		auto man = pcl::io::openni2::OpenNI2DeviceManager::getInstance();
 		auto deviceInfo = man->getConnectedDeviceInfos();
 		if (deviceInfo->size() > 0) {
 			for (auto &d : *deviceInfo)
 			{
-				std::cout << "Device: " << std::endl;
-				std::cout << " * Vendor:	" << d.vendor_ << std::endl;
-				std::cout << " * Name:	" << d.name_ << std::endl;
-				std::cout << " * ProductId:	" << d.product_id_ << std::endl;
-				std::cout << " * URI:		" << d.uri_ << std::endl;
+				if(output)
+				{
+					std::cout << "Device: " << std::endl;
+					std::cout << " * Vendor:	" << d.vendor_ << std::endl;
+					std::cout << " * Name:	" << d.name_ << std::endl;
+					std::cout << " * ProductId:	" << d.product_id_ << std::endl;
+					std::cout << " * URI:		" << d.uri_ << std::endl;
+				}
 				openNIDeviceIds_.push_back(d);
 			}
 		} else
 		{
 			std::cout << "No OpenNI2 compatible devices connected." << std::endl;
 		}
+		return deviceInfo->size();
 	}
 
 }

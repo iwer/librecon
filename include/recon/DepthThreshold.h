@@ -1,7 +1,6 @@
 #pragma once
 #include "AbstractPointProcessor.h"
 #include <pcl/filters/passthrough.h>
-#include <Eigen/Eigen>
 #include "typedefs.h"
 
 /**
@@ -13,6 +12,7 @@ namespace recon
 		public AbstractPointProcessor
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		DepthThreshold(void);
 		~DepthThreshold(void);
 

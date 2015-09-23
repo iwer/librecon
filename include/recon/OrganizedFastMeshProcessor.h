@@ -13,6 +13,7 @@ namespace recon
 		public AbstractMeshProcessor
 	{
 	public:
+		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		OrganizedFastMeshProcessor(void);
 		~OrganizedFastMeshProcessor(void);
 
@@ -23,7 +24,7 @@ namespace recon
 	private:
 		pcl::OrganizedFastMesh<PointType> ofm_;
 
-		int ofmPixelSize_;
+		int edgeLength_;
 
 
 	}; 

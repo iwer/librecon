@@ -15,8 +15,8 @@ namespace recon
 		depthExtrinsics_ = grabber_->getExtrinsics();
 		std::cout << "Created new Simulated OpenNI2 Sensor, cloud source: '" << fileName_ << "', Background source: '" 
 			<< backgroundFileName_ << "'" << std::endl;
-		std::cout << "Extrinsic translation: " << std::endl << depthExtrinsics_->getTranslation() << std::endl;
-		std::cout << "Extrinsic rotation   : "<< std::endl <<  depthExtrinsics_->getRotation().toRotationMatrix() << std::endl;
+//		std::cout << "Extrinsic translation: " << std::endl << depthExtrinsics_->getTranslation() << std::endl;
+//		std::cout << "Extrinsic rotation   : "<< std::endl <<  depthExtrinsics_->getRotation().toRotationMatrix() << std::endl;
 	}
 
 

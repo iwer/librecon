@@ -1,8 +1,9 @@
-#include "..\include\recon\DummySensor.h"
+#include "recon/DummySensor.h"
 
 namespace recon {
 	DummySensor::DummySensor(void)
 	{
+		cloudSource_ = nullptr;
 	}
 
 

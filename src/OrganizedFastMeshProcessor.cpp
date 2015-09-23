@@ -6,7 +6,7 @@ namespace recon
 	OrganizedFastMeshProcessor::OrganizedFastMeshProcessor(void) :
 		AbstractMeshProcessor(){
 			ofm_.setTriangulationType (pcl::OrganizedFastMesh<PointType>::TRIANGLE_LEFT_CUT);
-			ofmPixelSize_ = 5;
+			edgeLength_ = 5;
 	}
 
 
@@ -18,28 +18,22 @@ namespace recon
 	{
 		if(inputCloud_->size() > 0) {
 			// fast organized mesh triangulation
-			std::cout << "Cloud Size before Meshing: " << inputCloud_->points.size() << std::endl;
-
-			ofm_.setTrianglePixelSize (ofmPixelSize_);
+			ofm_.setTrianglePixelSize (edgeLength_);
 			ofm_.setInputCloud(inputCloud_);
-			{
-				//boost::mutex::scoped_lock(triangle_mutex_);
-				ofm_.reconstruct (*triangles_);
-			}
-			ofm_.getIndices();
-			//std::cout << "Reconstructed triangles: " << triangles_->size() << std::endl;
+			ofm_.reconstruct (*triangles_);
+			//std::cout << "Reconstructed triangles: " << triangles_->size() << " from " << inputCloud_->size() << " points" << std::endl;
 
 		}
 	}
 
 	int OrganizedFastMeshProcessor::getEdgeLength()
 	{
-		return ofmPixelSize_;
+		return edgeLength_;
 	}
 
 	void OrganizedFastMeshProcessor::setEdgeLength(int value)
 	{
-		ofmPixelSize_ = value;
+		edgeLength_ = value;
 	}
 
 
