@@ -15,6 +15,7 @@ namespace recon
 
 		EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 		AbstractSensor(void);
+		AbstractSensor(int id);
 		virtual ~AbstractSensor(void);
 
 		CloudConstPtr getBackground() const;
@@ -28,11 +29,14 @@ namespace recon
 		CameraExtrinsics::Ptr getRgbExtrinsics() const;
 		void setRgbExtrinsics(const CameraExtrinsics::Ptr rgbExtrinsics);
 
+		int getId() const;
 		AbstractPointCloudGenerator* getCloudSource() const;
 
 	protected:
 		virtual void setBackGroundImpl(void) = 0;
 
+
+		int sensorId_;
 		CloudConstPtr background_;
 		CameraIntrinsics::Ptr depthIntrinsics_;
 		CameraExtrinsics::Ptr depthExtrinsics_;

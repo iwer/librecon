@@ -20,13 +20,6 @@ namespace recon
 	{
 	}
 
-	void AbstractProcessingPipeline::setInputCloud(CloudConstPtr cloud, int cloudIndex)
-	{
-		//if(cloudIndex<cloudCount_){
-		//	clouds_[cloudIndex].swap(cloud);
-		//}
-	}
-
 	void AbstractProcessingPipeline::setSensor(AbstractSensor::Ptr sensor, int index)
 	{
 		if(index < cloudCount_){
@@ -37,14 +30,6 @@ namespace recon
 	CloudConstPtr AbstractProcessingPipeline::getOutputCloud()
 	{
 		return meshCloud_;
-	}
-
-	CloudConstPtr AbstractProcessingPipeline::getInputCloud(int index)
-	{
-		if(index >= 0 && index < cloudCount_) {
-			return sensors_[index]->getCloudSource()->getOutputCloud();
-		}
-		return boost::make_shared<Cloud const>();
 	}
 
 	TrianglesPtr AbstractProcessingPipeline::getTriangles()

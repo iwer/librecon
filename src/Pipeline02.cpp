@@ -105,4 +105,8 @@ namespace recon
 		}
 
 	}
+
+	void Pipeline02::processData(Frame::Ptr frame)
+	{
+	}
 }

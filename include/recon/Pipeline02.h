@@ -24,6 +24,7 @@ namespace recon
 		~Pipeline02(void);
 
 		void processData() override;
+		void processData(Frame::Ptr frame) override;
 
 	private:
 		DepthThreshold d_;
