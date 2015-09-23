@@ -92,15 +92,15 @@ namespace recon
 				auto rotation = frame->getInputExtrinsics(i)->getRotation();
 
 				// Flip to match global coordinate frame
-				Eigen::AngleAxisf aa(*rotation);
-				auto axis = aa.axis();
-				aa.angle();
-				axis.x() = -axis.x();
-				axis.y() = axis.y();
-				axis.z() = -axis.z();
-				aa.axis() = axis;
+				//Eigen::AngleAxisf aa(*rotation);
+				//auto axis = aa.axis();
+				//aa.angle();
+				//axis.x() = -axis.x();
+				//axis.y() = axis.y();
+				//axis.z() = -axis.z();
+				//aa.axis() = axis;
 
-				transformation.rotate(aa);
+				transformation.rotate(*rotation);
 				pcl::transformPointCloud(*mp_->getInputCloud(), *cloudTransformed, transformation);
 
 				meshCloud_ = cloudTransformed;
