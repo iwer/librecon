@@ -1,23 +1,27 @@
 #include "recon/AbstractPointProcessor.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 
-AbstractPointProcessor::AbstractPointProcessor(void) :
-	inputCloud_(new Cloud),
-	outputCloud_(new Cloud)
+namespace recon
 {
-}
+	AbstractPointProcessor::AbstractPointProcessor(void) :
+		inputCloud_(new Cloud),
+		outputCloud_()
+	{
+	}
 
 
-AbstractPointProcessor::~AbstractPointProcessor(void)
-{
-}
+	AbstractPointProcessor::~AbstractPointProcessor(void)
+	{
+	}
 
-void AbstractPointProcessor::setInputCloud(CloudConstPtr cloud)
-{
-	inputCloud_ = cloud;
-}
+	void AbstractPointProcessor::setInputCloud(CloudConstPtr cloud)
+	{
+		inputCloud_.swap(cloud);
+	}
 
-CloudPtr AbstractPointProcessor::getOutputCloud()
-{
-	return outputCloud_;
+	CloudPtr AbstractPointProcessor::getOutputCloud()
+	{
+		return outputCloud_.makeShared();//boost::make_shared<Cloud>(outputCloud_);
+	} 
 }
