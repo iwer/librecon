@@ -2,7 +2,7 @@ FILE (GLOB_RECURSE project_SRCS *.cpp *.cxx *.cc *.C *.c *.h *.hpp)
 
 FILE(GLOB_RECURSE project_HDRS ../include/*.h)
 
-SET (project_LIBS ${Boost_LIBRARIES} ${Log4Cxx_LIBRARIES} ${PCL_LIBRARIES})
+SET (project_LIBS ${Boost_LIBRARIES} ${PCL_LIBRARIES})
 SET (project_BIN ${PROJECT_NAME})
 
 IF (NOT DEFINED project_build_shared)

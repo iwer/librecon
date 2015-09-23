@@ -1,43 +1,50 @@
 #include "recon/DepthThreshold.h"
 
-DepthThreshold::DepthThreshold(void):
-	AbstractPointProcessor()
+namespace recon
 {
-	depthThreshMax = 1.5;
-	depthThreshMin = 0;
-	pass_.setFilterFieldName ("z");
-	pass_.setKeepOrganized(true);
-}
-
-DepthThreshold::~DepthThreshold(void)
-{
-}
-
-void DepthThreshold::processData()
-{
-	if(inputCloud_->size() > 0) {
-		pass_.setFilterLimits (depthThreshMin, depthThreshMax);
-		pass_.setInputCloud(inputCloud_);
-		pass_.filter(*outputCloud_);
+	DepthThreshold::DepthThreshold(void):
+		AbstractPointProcessor()
+	{
+		depthThreshMax_ = 5;
+		depthThreshMin_ = .1;
+		pass_.setFilterFieldName ("z");
+		pass_.setKeepOrganized(true);
 	}
-}
 
-float DepthThreshold::getDepthThresholdMax()
-{
-	return depthThreshMax;
-}
+	DepthThreshold::~DepthThreshold(void)
+	{
+	}
 
-void DepthThreshold::setDepthThresholdMax(float value)
-{
-	depthThreshMax = value;
-}
+	void DepthThreshold::processData()
+	{
+		if(inputCloud_->size() > 0) {
+			pass_.setFilterLimits (depthThreshMin_, depthThreshMax_);
+			pass_.setInputCloud(inputCloud_);
+			pass_.filter(outputCloud_);
+			//std::cout << "DepthThresh in: "<< inputCloud_->size() << " out: " << outputCloud_.size() << std::endl;
+		}
+	}
 
-float DepthThreshold::getDepthThresholdMin()
-{
-	return depthThreshMin;
-}
+	float DepthThreshold::getDepthThresholdMax()
+	{
+		return depthThreshMax_;
+	}
 
-void DepthThreshold::setDepthThresholdMin(float value)
-{
-	depthThreshMin = value;
+	void DepthThreshold::setDepthThresholdMax(float value)
+	{
+		depthThreshMax_ = value;
+		std::cout << "Updated Depth Threshold Max to " << value << std::endl;
+	}
+
+	float DepthThreshold::getDepthThresholdMin()
+	{
+		return depthThreshMin_;
+	}
+
+	void DepthThreshold::setDepthThresholdMin(float value)
+	{
+		depthThreshMin_ = value;
+		std::cout << "Updated Depth Threshold Min to " << value << std::endl;
+	}
+
 }
