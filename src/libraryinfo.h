@@ -12,7 +12,7 @@
  
 #define APPLICATION_NAME               "Reconstruction Library"
 #define APPLICATION_CODENAME           "recon"
-#define APPLICATION_COPYRIGHT_YEARS    "2015"
+#define APPLICATION_COPYRIGHT_YEARS    "2015-2016"
 #define APPLICATION_VERSION_MAJOR      1
 /* #undef APPLICATION_VERSION_MINOR */
 /* #undef APPLICATION_VERSION_PATCH */

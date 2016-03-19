@@ -3,11 +3,11 @@
 #
 # Project Properties
 #
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6.2)
-PROJECT (recon)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
+PROJECT (recon LANGUAGES CXX)
 SET (APPLICATION_NAME "Reconstruction Library")
 SET (APPLICATION_CODENAME "${PROJECT_NAME}")
-SET (APPLICATION_COPYRIGHT_YEARS "2015")
+SET (APPLICATION_COPYRIGHT_YEARS "2015-2016")
 SET (APPLICATION_VERSION_MAJOR 1)
 SET (APPLICATION_VERSION_MINOR 0)
 SET (APPLICATION_VERSION_PATCH 0)
@@ -45,7 +45,7 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 #
 # Locate Project Prerequisites 
 #
-SET (Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0" "1.42" "1.42.0" "1.43" "1.43.0" "1.44" "1.44.0" "1.45" "1.45.0" "1.46" "1.46.0" "1.47" "1.47.0" "1.48" "1.48.0" "1.49" "1.49.0" "1.50" "1.50.0" "1.55" "1.55.0")
+SET (Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0" "1.42" "1.42.0" "1.43" "1.43.0" "1.44" "1.44.0" "1.45" "1.45.0" "1.46" "1.46.0" "1.47" "1.47.0" "1.48" "1.48.0" "1.49" "1.49.0" "1.50" "1.50.0" "1.55" "1.55.0" "1.60" "1.60.0")
 SET(Boost_USE_STATIC_LIBS   ON)
 FIND_PACKAGE (Boost 1.55 COMPONENTS "date_time" "filesystem" "graph" "iostreams" "program_options" "regex" "serialization" "signals" "system" "thread" "wserialization" REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
