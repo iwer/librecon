@@ -34,7 +34,9 @@ namespace recon
 		if (nextOpenNISensorIndex_ < nDevices)
 		{
 			auto info(openNIDeviceIds_.at(nextOpenNISensorIndex_));
+			std::cout << "OpenNI Sensor: " << info.name_ << std::endl;
 			AbstractSensor::Ptr sensor(new OpenNI2Sensor(info, nextOpenNISensorIndex_));
+			std::cout << sensor->getId() << std::endl;
 			nextOpenNISensorIndex_++;
 			return sensor;
 		}

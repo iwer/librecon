@@ -101,7 +101,7 @@ namespace recon
 			triangles_ = mp_->getTriangles();
 		}  else
 		{
-			std::cerr << "Combined Cloud contains no points..." << std::cout;
+			std::cerr << "Combined Cloud contains no points..." << std::endl;
 		}
 
 	}
