@@ -81,8 +81,11 @@ target_link_libraries(librecon
 	boost-iostreams
 	boost-serialization
 	boost-thread
-	pcl 
-	unittestpp)
+	pcl-common 
+	pcl-search
+	pcl-io
+	pcl-filters
+	pcl-surface)
 
 # 'make install' to the correct location
 install(TARGETS librecon
@@ -102,14 +105,6 @@ add_executable(testlibrecon
 
 target_link_libraries(testlibrecon
     librecon 
-#	boost-datetime 
-	boost-filesystem 
-	boost-system 
-	boost-chrono
-	boost-iostreams
-	boost-serialization
-	boost-thread
-	unittestpp 
-	pcl)
+	unittestpp)
 
 add_test(testlibrecon testlibrecon)
