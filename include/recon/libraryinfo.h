@@ -1,4 +1,4 @@
-// <Copyright Holder>. Copyright (C) <Copyright Year(s)>. <License>.
+// Iwer Petersen. Copyright (C) 2013 - 2016. <License>.
 #ifndef HEADER_SRC_APPINFO_H_INCLUDED
 #define HEADER_SRC_APPINFO_H_INCLUDED
 
@@ -11,8 +11,8 @@
  */
  
 #define APPLICATION_NAME               "Reconstruction Library"
-#define APPLICATION_CODENAME           "recon"
-#define APPLICATION_COPYRIGHT_YEARS    "2015"
+#define APPLICATION_CODENAME           "librecon"
+#define APPLICATION_COPYRIGHT_YEARS    "2015-2016"
 #define APPLICATION_VERSION_MAJOR      1
 /* #undef APPLICATION_VERSION_MINOR */
 /* #undef APPLICATION_VERSION_PATCH */
