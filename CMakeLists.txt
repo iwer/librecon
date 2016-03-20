@@ -1,100 +1,115 @@
-# Iwer Petersen. Copyright (C) 2015. <License>.
+# Define library. Only source files here!
+project(librecon VERSION 0.1 LANGUAGES CXX)
 
-#
-# Project Properties
-#
-CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
-PROJECT (recon LANGUAGES CXX)
-SET (APPLICATION_NAME "Reconstruction Library")
-SET (APPLICATION_CODENAME "${PROJECT_NAME}")
-SET (APPLICATION_COPYRIGHT_YEARS "2015-2016")
-SET (APPLICATION_VERSION_MAJOR 1)
-SET (APPLICATION_VERSION_MINOR 0)
-SET (APPLICATION_VERSION_PATCH 0)
-SET (APPLICATION_VERSION_TYPE SNAPSHOT)
-SET (APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
-SET (APPLICATION_VENDOR_ID "de.haw-hamburg.informatik.i2e")
-SET (APPLICATION_VENDOR_NAME "Interactive Immersive Environments")
-SET (APPLICATION_VENDOR_URL "i2e.informatik.haw-hamburg.de")
-SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
+add_library(librecon
+    # Source files
+	src/AbstractMeshProcessor.cpp
+	src/AbstractPointCloudGenerator.cpp
+	src/AbstractPointProcessor.cpp
+	src/AbstractProcessingPipeline.cpp
+	src/AbstractSensor.cpp
+	src/CameraExtrinsics.cpp
+	src/CameraIntrinsics.cpp
+	src/DepthFilePointCloudGenerator.cpp
+	src/DepthThreshold.cpp
+	src/DummySensor.cpp
+	src/FilePointCloudGenerator.cpp
+	src/Frame.cpp
+	src/GreedyProjectionMeshProcessor.cpp
+	src/OpenNI2Sensor.cpp
+	src/OrganizedFastMeshProcessor.cpp
+	src/PclOpenNI2Grabber.cpp
+	src/Pipeline01.cpp
+	src/Pipeline02.cpp
+	src/PointCloudSampler.cpp
+	src/PointCloudSmoother.cpp
+	src/SensorFactory.cpp
+	src/SimulatedOpenNI2Sensor.cpp
+	src/StaticBackgroundRemover.cpp
+	src/version.cpp
+	# Header files (to be able to edit in VS et. al.)
+	include/recon/AbstractMeshProcessor.h
+	include/recon/AbstractPointCloudGenerator.h
+	include/recon/AbstractPointProcessor.h
+	include/recon/AbstractProcessingPipeline.h
+	include/recon/AbstractSensor.h
+	include/recon/CameraExtrinsics.h
+	include/recon/CameraIntrinsics.h
+	include/recon/DepthFilePointCloudGenerator.h
+	include/recon/DepthThreshold.h
+	include/recon/DummySensor.h
+	include/recon/FilePointCloudGenerator.h
+	include/recon/Frame.h
+	include/recon/GreedyProjectionMeshProcessor.h
+	include/recon/libraryinfo.h
+	include/recon/OpenNI2Sensor.h
+	include/recon/OrganizedFastMeshProcessor.h
+	include/recon/PclOpenNI2Grabber.h
+	include/recon/Pipeline01.h
+	include/recon/Pipeline02.h
+	include/recon/PointCloudSampler.h
+	include/recon/PointCloudSmoother.h
+	include/recon/recon.h
+	include/recon/SensorFactory.h
+	include/recon/SimulatedOpenNI2Sensor.h
+	include/recon/StaticBackgroundRemover.h
+	include/recon/typedefs.h
+	include/recon/version.h
+	src/libraryinfo.h
+	)
 
-add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT ) #-H )
+# Define headers for this library. PUBLIC headers are used for
+# compiling the library, and will be added to consumers' build
+# paths.
+target_include_directories(librecon PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    PRIVATE src)
 
+# If we have compiler requirements for this library, list them
+# here
+target_compile_features(librecon
+    PUBLIC cxx_auto_type
+    PRIVATE cxx_variadic_templates)
 
-#
-# Debugging Options
-#
-SET (CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
+# Depend on a library that we defined in the top-level file
+target_link_libraries(librecon
+	boost-datetime 
+	boost-filesystem 
+	boost-system 
+	boost-chrono
+	boost-iostreams
+	boost-serialization
+	boost-thread
+	pcl 
+	unittestpp)
 
-#
-# Project Output Paths
-#
-SET (MAINFOLDER ${PROJECT_SOURCE_DIR})
-SET (EXECUTABLE_OUTPUT_PATH "${MAINFOLDER}/bin")
-SET (LIBRARY_OUTPUT_PATH "${MAINFOLDER}/lib")
+# 'make install' to the correct location
+install(TARGETS librecon
+    ARCHIVE  DESTINATION lib
+    LIBRARY  DESTINATION lib
+    RUNTIME  DESTINATION bin)  # This is for Windows
+install(DIRECTORY include/ DESTINATION include)
 
-#
-# Project Search Paths
-#
-LIST (APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
-LIST (APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}/tools")
-LIST (APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}/thirdparty")
-SET (CMAKE_MODULE_PATH "${MAINFOLDER}/tools/share/cmake")
-INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
+# This makes the project importable from the build directory
+export(TARGETS librecon FILE LibConfig.cmake)
 
-#
-# Locate Project Prerequisites 
-#
-SET (Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0" "1.42" "1.42.0" "1.43" "1.43.0" "1.44" "1.44.0" "1.45" "1.45.0" "1.46" "1.46.0" "1.47" "1.47.0" "1.48" "1.48.0" "1.49" "1.49.0" "1.50" "1.50.0" "1.55" "1.55.0" "1.60" "1.60.0")
-SET(Boost_USE_STATIC_LIBS   ON)
-FIND_PACKAGE (Boost 1.55 COMPONENTS "date_time" "filesystem" "graph" "iostreams" "program_options" "regex" "serialization" "signals" "system" "thread" "wserialization" REQUIRED)
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+# Every library has unit tests, of course
+add_executable(testlibrecon
+    test/main.cpp
+	test/sanity_check.cpp
+	test/test.h)
 
-FIND_PACKAGE (UnitTestPlusPlus REQUIRED)
-INCLUDE_DIRECTORIES(${UnitTestPlusPlus_INCLUDE_DIRS})
-LINK_DIRECTORIES(${UnitTestPlusPlus_LIBRARY_DIRS})
+target_link_libraries(testlibrecon
+    librecon 
+#	boost-datetime 
+	boost-filesystem 
+	boost-system 
+	boost-chrono
+	boost-iostreams
+	boost-serialization
+	boost-thread
+	unittestpp 
+	pcl)
 
-find_package(PCL 1.7 REQUIRED)
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS}) 
-add_definitions(${PCL_DEFINITIONS})
-
-#
-# Configure Files
-#
-FILE (GLOB_RECURSE CONFIGINPUTS1 include/*.in.h.cmake)
-FILE (GLOB_RECURSE CONFIGINPUTS2 include/*.h.in.cmake)
-FILE (GLOB_RECURSE CONFIGINPUTS3 src/*.in.h.cmake)
-FILE (GLOB_RECURSE CONFIGINPUTS4 src/*.h.in.cmake)
-FILE (GLOB_RECURSE CONFIGINPUTS5 test/*.in.h.cmake)
-FILE (GLOB_RECURSE CONFIGINPUTS6 test/*.h.in.cmake)
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS1}")
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS2}")
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS3}")
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS4}")
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS5}")
-LIST (APPEND CONFIGINPUTS "${CONFIGINPUTS6}")
-FOREACH (CONFIGINPUT ${CONFIGINPUTS})
-    STRING (REPLACE ".in.h.cmake" ".h" CONFIGOUTPUT1 "${CONFIGINPUT}")
-    STRING (REPLACE ".h.in.cmake" ".h" CONFIGOUTPUT2 "${CONFIGOUTPUT1}")
-    CONFIGURE_FILE ("${CONFIGINPUT}" "${CONFIGOUTPUT2}")
-ENDFOREACH (CONFIGINPUT ${CONFIGINPUTS})
-
-#
-# Add Build Targets
-#
-ADD_SUBDIRECTORY(src)
-#ADD_SUBDIRECTORY(test)
-
-#
-# Add Install Targets
-#
-IF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
-    INSTALL(DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}" DESTINATION "include")
-ENDIF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
-
-#
-# Add Documentation Targets
-#
-INCLUDE (DocumentationTargets)
+add_test(testlibrecon testlibrecon)
