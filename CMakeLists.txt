@@ -128,7 +128,7 @@ install(TARGETS librecon
 install(DIRECTORY include/ DESTINATION include)
 
 # This makes the project importable from the build directory
-export(TARGETS librecon FILE LibConfig.cmake)
+export(TARGETS librecon FILE ReconConfig.cmake)
 
 # Every library has unit tests, of course
 add_executable(testlibrecon
