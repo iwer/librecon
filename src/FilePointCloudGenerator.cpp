@@ -39,7 +39,8 @@ namespace recon
 		pcl::PCDReader reader;
 		Cloud cloud;
 		CloudPtr cloudT(new Cloud);
-		auto err = reader.read(filename_, cloud);
+		auto err = pcl::io::loadPCDFile(filename_, cloud);
+		//auto err = reader.read(filename_, cloud);
 		if(!err){
 			extrinsics_ = boost::make_shared<CameraExtrinsics>(CameraExtrinsics(cloud.sensor_origin_, cloud.sensor_orientation_));
 			{
