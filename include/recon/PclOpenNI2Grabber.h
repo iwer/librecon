@@ -19,6 +19,7 @@ namespace recon
 		void cloud_callback (const pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr& cloud);
 		void image_callback(const boost::shared_ptr<pcl::io::Image>& image);
 
+		void setMirror(bool mirrorEnabled);
 
 		void start() override;
 		void stop() override;
