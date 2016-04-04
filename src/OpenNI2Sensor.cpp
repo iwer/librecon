@@ -10,6 +10,9 @@ namespace recon
 	{
 		cloudSource_ = grabber_;
 		depthIntrinsics_ = grabber_->getDepthIntrinsics();
+		if (!(deviceInfo.vendor_ == "Microsoft" && deviceInfo.name_ == "Kinect")) {
+			grabber_->setMirror(true);
+		}
 		grabber_->start();
 
 		std::cout << "Created new OpenNI2 Sensor: " << deviceInfo.vendor_ << " " << deviceInfo.name_ << std::endl;

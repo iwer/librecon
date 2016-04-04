@@ -88,4 +88,8 @@ namespace recon
 		//std::cout << "Got " << newImage->getDataSize() << " bytes of image data" << std::endl;
 		image_ = newImage;
 	}
+	void PclOpenNI2Grabber::setMirror(bool mirrorEnabled)
+	{
+		grabber_->getDevice()->setMirror(mirrorEnabled);
+	}
 }
