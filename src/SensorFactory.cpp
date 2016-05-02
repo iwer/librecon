@@ -3,6 +3,7 @@
 #include "recon/PclOpenNI2Grabber.h"
 #include "recon/OpenNI2Sensor.h"
 #include "recon/SimulatedOpenNI2Sensor.h"
+#include <recon/DummySensor.h>
 
 namespace recon
 {
@@ -10,6 +11,7 @@ namespace recon
 		: openNIDeviceIds_()
 		, nextOpenNISensorIndex_(0)
 		, nextFileSensorIndex_(0)
+		, nextDummySensorIndex_(0)
 	{
 
 	}
@@ -44,6 +46,14 @@ namespace recon
 		{
 			return nullptr;
 		}
+	}
+
+	AbstractSensor::Ptr SensorFactory::createDummySensor()
+	{
+		std::cout << "Creating Dummy sensor #" << nextOpenNISensorIndex_ << std::endl;
+		AbstractSensor::Ptr sensor(new DummySensor(nextDummySensorIndex_));
+		nextDummySensorIndex_++;
+		return sensor;
 	}
 
 	int SensorFactory::checkConnectedDevices(bool output)
