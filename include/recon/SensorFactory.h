@@ -14,11 +14,14 @@ namespace recon
 		~SensorFactory();
 		AbstractSensor::Ptr createFilePointCloudGenerator(std::string fileName, std::string backgroundFileName);
 		AbstractSensor::Ptr createPclOpenNI2Grabber();
+		AbstractSensor::Ptr createDummySensor();
+
 		int checkConnectedDevices(bool output);
 	private:
 		std::vector<pcl::io::openni2::OpenNI2DeviceInfo> openNIDeviceIds_;
 		int nextOpenNISensorIndex_;
 		int nextFileSensorIndex_;
+		int nextDummySensorIndex_;
 	};
 
 }

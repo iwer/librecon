@@ -6,6 +6,11 @@ namespace recon {
 		cloudSource_ = nullptr;
 	}
 
+	DummySensor::DummySensor(int id)
+		: AbstractSensor(id)
+	{
+		cloudSource_ = nullptr;
+	}
 
 	DummySensor::~DummySensor(void)
 	{
