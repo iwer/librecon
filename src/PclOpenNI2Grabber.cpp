@@ -53,8 +53,8 @@ namespace recon
 		depth_principal_point_x =  x_res / 2 - 0.5;
 		depth_principal_point_y =  y_res / 2 - 0.5;
 
-		depth_focal_length_x = 5.3500201416015625e+02;
-		depth_focal_length_y = 5.3500201416015625e+02;
+		depth_focal_length_x = 531.15;
+		depth_focal_length_y = 531.15;
 
 		CameraIntrinsics intrinsics(depth_focal_length_x, depth_focal_length_y, depth_principal_point_x, depth_principal_point_y, x_res, y_res);
 		return boost::make_shared<CameraIntrinsics>(intrinsics);
