@@ -1,5 +1,6 @@
 #include "recon/PclOpenNI2Grabber.h"
 #include <pcl/common/io.h>
+#include <pcl/common/transforms.h>
 
 namespace recon
 {
@@ -77,9 +78,13 @@ namespace recon
 	{
 		boost::mutex::scoped_lock lock (cloud_mutex_);
 		fully_started = true;
-		Cloud alphaRemovedCloud;
+		Cloud alphaRemovedCloud, cloudTransformed;
 		pcl::copyPointCloud<pcl::PointXYZRGBA, PointType>(*cloud, alphaRemovedCloud);
-		cloud_ = alphaRemovedCloud.makeShared();
+
+		Eigen::Affine3f transform(Eigen::Scaling<float>(1, 1, -1));
+
+		pcl::transformPointCloud(alphaRemovedCloud, cloudTransformed, transform);
+		cloud_ = cloudTransformed.makeShared();
 	}
 
 	void PclOpenNI2Grabber::image_callback(const boost::shared_ptr<pcl::io::Image>& newImage)
