@@ -81,7 +81,7 @@ namespace recon
 		Cloud alphaRemovedCloud, cloudTransformed;
 		pcl::copyPointCloud<pcl::PointXYZRGBA, PointType>(*cloud, alphaRemovedCloud);
 
-		Eigen::Affine3f transform(Eigen::Scaling<float>(1, 1, -1));
+		Eigen::Affine3f transform(Eigen::Scaling<float>(1, -1, 1));
 
 		pcl::transformPointCloud(alphaRemovedCloud, cloudTransformed, transform);
 		cloud_ = cloudTransformed.makeShared();
