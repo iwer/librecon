@@ -50,7 +50,7 @@ namespace recon
 
 	AbstractSensor::Ptr SensorFactory::createDummySensor()
 	{
-		std::cout << "Creating Dummy sensor #" << nextOpenNISensorIndex_ << std::endl;
+		std::cout << "Creating Dummy sensor #" << nextDummySensorIndex_ << std::endl;
 		AbstractSensor::Ptr sensor(new DummySensor(nextDummySensorIndex_));
 		nextDummySensorIndex_++;
 		return sensor;
