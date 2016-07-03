@@ -5,6 +5,7 @@
 #include "recon/AbstractPointCloudGenerator.h"
 #include <pcl/io/pcd_io.h>
 #include <boost/make_shared.hpp>
+#include <pcl/surface/texture_mapping.h>
 
 namespace recon
 {
@@ -28,6 +29,8 @@ namespace recon
 		void setRgbIntrinsics(const CameraIntrinsics::Ptr rgbIntrinsics);
 		CameraExtrinsics::Ptr getRgbExtrinsics() const;
 		void setRgbExtrinsics(const CameraExtrinsics::Ptr rgbExtrinsics);
+
+		pcl::texture_mapping::Camera asPclCamera() const;
 
 		int getId() const;
 		AbstractPointCloudGenerator* getCloudSource() const;

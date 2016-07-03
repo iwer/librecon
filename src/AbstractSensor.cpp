@@ -76,6 +76,19 @@ namespace recon
 		rgbExtrinsics_ = rgbExtrinsics;
 	}
 
+	pcl::texture_mapping::Camera AbstractSensor::asPclCamera() const
+	{
+		pcl::texture_mapping::Camera cam;
+		cam.width = getDepthIntrinsics()->getSensorWidth();
+		cam.height = getDepthIntrinsics()->getSensorHeight();
+		cam.center_w = cam.width / 2;
+		cam.center_h = cam.height / 2;
+		cam.focal_length_w = getDepthIntrinsics()->getFocalLengthX();
+		cam.focal_length_h = getDepthIntrinsics()->getFocalLengthY();
+		cam.pose = getDepthExtrinsics()->getTransformation();
+		return cam;
+	}
+
 	AbstractPointCloudGenerator* AbstractSensor::getCloudSource() const
 	{
 		return cloudSource_;
