@@ -53,7 +53,7 @@ namespace recon
 	void AbstractSensor::setDepthExtrinsics(const CameraExtrinsics::Ptr depthExtrinsics)
 	{
 		depthExtrinsics_ = depthExtrinsics;
-		std::cout << "Depth Extrinsics updated" << std::endl << *depthExtrinsics << std::endl;
+		//std::cout << "Depth Extrinsics updated" << std::endl << *depthExtrinsics << std::endl;
 	}
 
 	CameraIntrinsics::Ptr AbstractSensor::getRgbIntrinsics() const
