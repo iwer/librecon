@@ -10,8 +10,8 @@
 #define APPLICATION_VERSION_MAJOR       1
 #define APPLICATION_VERSION_MINOR       0
 #define APPLICATION_VERSION_PATCH       0
-#define APPLICATION_VERSION_BUILD       10
+#define APPLICATION_VERSION_BUILD       11
 #define APPLICATION_VERSION_TYPE        "-snapshot"
-#define APPLICATION_VERSION_STRING      "1.0.0.10-snapshot"
+#define APPLICATION_VERSION_STRING      "1.0.0.11-snapshot"
 
 #endif /* DUDE_VERSION_H */

@@ -15,8 +15,8 @@ namespace recon
 
 
 		virtual void aquireFrame() = 0;
-		CloudConstPtr getOutputCloud();
-		ImagePtr getOutputImage();
+		virtual CloudConstPtr getOutputCloud();
+		virtual ImagePtr getOutputImage();
 		virtual void start() = 0;
 		virtual void stop() = 0;
 
