@@ -8,6 +8,7 @@ namespace recon
 	PclOpenNI2Grabber::PclOpenNI2Grabber(void)
 		: AbstractPointCloudGenerator()
 		, fully_started(false)
+		, mirrored_(false)
 	{
 		grabber_ =  new pcl::io::OpenNI2Grabber("", pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_VGA_30Hz);
 	}
@@ -15,6 +16,7 @@ namespace recon
 	PclOpenNI2Grabber::PclOpenNI2Grabber(std::string uri)
 		: AbstractPointCloudGenerator()
 		, fully_started(false)
+        , mirrored_(false)
 	{
 		grabber_ =  new pcl::io::OpenNI2Grabber(uri, pcl::io::OpenNI2Grabber::OpenNI_Default_Mode, pcl::io::OpenNI2Grabber::OpenNI_VGA_30Hz);
 	}
@@ -95,6 +97,7 @@ namespace recon
 	}
 	void PclOpenNI2Grabber::setMirror(bool mirrorEnabled)
 	{
-		grabber_->getDevice()->setMirror(mirrorEnabled);
+		//grabber_->getDevice()->setMirror(mirrorEnabled);
+        mirrored_ = mirrorEnabled;
 	}
 }

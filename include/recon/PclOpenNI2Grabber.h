@@ -33,6 +33,7 @@ namespace recon
 		boost::signals2::connection image_connection_;
 
 		bool fully_started;
+		bool mirrored_;
 	}; 
 }
 

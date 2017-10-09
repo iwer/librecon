@@ -1,7 +1,8 @@
 #include <recon/CameraIntrinsics.h>
 #include <iostream>
+#include <cmath>
 
-#define M_PI 3.14159265359
+#define M_PI 3.14159265359f
 
 recon::CameraIntrinsics::CameraIntrinsics()
 {
@@ -9,8 +10,8 @@ recon::CameraIntrinsics::CameraIntrinsics()
 
 void recon::CameraIntrinsics::updateFov()
 {
-	hFov_ = 180 / M_PI * 2 * std::atan(static_cast<float>(sensorWidth_) * .5 / focalLengthX_);
-	vFov_ = 180 / M_PI * 2 * std::atan(static_cast<float>(sensorHeight_) * .5 / focalLengthY_);
+	hFov_ = 180 / M_PI * 2 * std::atan(sensorWidth_ * .5f / focalLengthX_);
+	vFov_ = 180 / M_PI * 2 * std::atan(sensorHeight_ * .5f / focalLengthY_);
 }
 
 recon::CameraIntrinsics::CameraIntrinsics(float focalLength, int sensorWidth, int sensorHeight)
